@@ -1,1 +1,5 @@
 {"firstName":"first","lastName":"last","email":"student@mcgill.com","studentId":12345,"userType":"student","username":"student","password":"$2b$10$N2VXYoOSQybRq3QQ8jM2N.luv3bQWUy6ktZ7W25ygIBgL6tGbacqK","registeredCourses":[]}
+{"firstName":"first","lastName":"last","email":"ta@mcgill.com","studentId":12345,"userType":"ta","username":"ta","password":"$2b$10$N2VXYoOSQybRq3QQ8jM2N.luv3bQWUy6ktZ7W25ygIBgL6tGbacqK","registeredCourses":[]}
+{"firstName":"first","lastName":"last","email":"prof@mcgill.com","studentId":12345,"userType":"prof","username":"prof","password":"$2b$10$N2VXYoOSQybRq3QQ8jM2N.luv3bQWUy6ktZ7W25ygIBgL6tGbacqK","registeredCourses":[]}
+{"firstName":"first","lastName":"last","email":"sysop@mcgill.com","studentId":12345,"userType":"sysop","username":"sysop","password":"$2b$10$N2VXYoOSQybRq3QQ8jM2N.luv3bQWUy6ktZ7W25ygIBgL6tGbacqK","registeredCourses":[]}
+{"firstName":"first","lastName":"last","email":"admin@mcgill.com","studentId":12345,"userType":"admin","username":"admin","password":"$2b$10$N2VXYoOSQybRq3QQ8jM2N.luv3bQWUy6ktZ7W25ygIBgL6tGbacqK","registeredCourses":[]}

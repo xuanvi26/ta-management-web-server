@@ -24,6 +24,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", require("./src/routes/session"));
 app.use("/account", require("./src/routes/account"));
+app.use("/ta-administration", require("./src/routes/ta_administration"));
+app.use("/ta-management", require("./src/routes/ta_management"));
+app.use("/ta-rating", require("./src/routes/ta_rating"));
+app.use("/sysop-tasks", require("./src/routes/sysop_tasks"));
 
 app.listen(port, () => {
   logger.info({

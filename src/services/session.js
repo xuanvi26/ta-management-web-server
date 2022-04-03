@@ -3,7 +3,11 @@ const { comparePasswords } = require.main.require("./src/utils/password");
 
 async function checkLoginCredentials(username, password) {
   const user = await model.getUserWithKeys({ username });
-  return user && (await comparePasswords(password, user.password));
+  if (user && (await comparePasswords(password, user.password))) {
+    return user;
+  } else {
+    return false;
+  }
 }
 
 module.exports = {

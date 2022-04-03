@@ -14,7 +14,9 @@ const schema = Joi.object({
 
   studentId: Joi.number().required(),
 
-  userType: Joi.string().valid("student", "system-manager").required(),
+  userType: Joi.string()
+    .valid("student", "ta", "prof", "sysop", "admin")
+    .required(),
 
   username: Joi.string().alphanum().min(3).max(30).required(),
 

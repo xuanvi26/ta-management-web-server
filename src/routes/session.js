@@ -14,15 +14,27 @@ const schema = Joi.object({
   password: Joi.string().required(),
 }).required();
 
-// TODO: move
 router.get("/", (req, res) => {
-  res.render("pages/login");
+  res.render("pages/landing/home");
+});
+
+router.get("/login", (req, res) => {
+  if (req.session.authenticated) {
+    res.render("pages/landing/dashboard", {
+      errors: [],
+      response: response_type.OK,
+    });
+  } else {
+    res.render("pages/landing/login");
+  }
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
   if (req.session.authenticated) {
-    res.json({ errors: [], response: response_type.OK });
+    res.render("pages/landing/dashboard", {
+      errors: [],
+      response: response_type.OK,
+    });
     return;
   }
 
@@ -36,9 +48,14 @@ router.post("/login", async (req, res) => {
   }
 
   const { username, password } = value;
-  if (await checkLoginCredentials(username, password)) {
+  let authenticatedUser = await checkLoginCredentials(username, password);
+  if (authenticatedUser) {
     req.session.authenticated = true;
-    res.render("pages/success", { errors: [], response: response_type.OK });
+    req.session.user = { userType: authenticatedUser.userType };
+    res.render("pages/landing/dashboard", {
+      errors: [],
+      response: response_type.OK,
+    });
   } else {
     res.status(401).json({
       response: response_type.AUTH,
