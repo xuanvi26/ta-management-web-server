@@ -2,14 +2,14 @@ const express = require("express");
 const morgan = require("morgan");
 const session = require("express-session");
 const logger = require("./src/utils/logger");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-require('dotenv').config()
+require("dotenv").config();
 const port = 3000;
 
 const app = express();
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.use(morgan("tiny"));
 app.use(express.json());
 app.use(
@@ -21,7 +21,6 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 app.use("/", require("./src/routes/session"));
 app.use("/account", require("./src/routes/account"));

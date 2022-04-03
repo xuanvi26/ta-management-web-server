@@ -16,11 +16,11 @@ const schema = Joi.object({
 
 // TODO: move
 router.get("/", (req, res) => {
-  res.render('pages/login');
+  res.render("pages/login");
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   if (req.session.authenticated) {
     res.json({ errors: [], response: response_type.OK });
     return;
