@@ -4,14 +4,19 @@
 		<h1>Landing dashboard</h1>
 		<form action="/logout" method="POST">
 			<button>Logout</button>
-            <a href="/ta-rating">Rate a TA</a>
-            <% if(userType === "ta" || userType ==="prof" || userType ==="admin" || userType ==="sysop") { %> 
-                <a href="/ta-management">Manage TAs</a>
-            <% } if(userType === "admin" || userType === "sysop") { %>
-                <a href="ta-administration">TA Administration</a>
-            <% } if(userType === "sysop") { %>
-                <a href="sysop-tasks">sysop-tasks</a>
-            <% } %>
+			<a href="/ta-rating">Rate a TA</a>
+			<% if(userTypes.some(function(type) { return type === "ta" }) ||
+			userTypes.some(function(type) { return type === "prof" }) ||
+			userTypes.some(function(type) { return type === "admin" }) ||
+			userTypes.some(function(type) { return type === "sysop" })) { %>
+			<a href="/ta-management">Manage TAs</a>
+			<% } if(userTypes.some(function(type) { return type === "admin" })
+			|| userTypes.some(function(type) { return type === "sysop" })) { %>
+			<a href="ta-administration">TA Administration</a>
+			<% } if(userTypes.some(function(type) { return type === "sysop" }))
+			{ %>
+			<a href="sysop-tasks">sysop-tasks</a>
+			<% } %>
 		</form>
 	</body>
 </html>

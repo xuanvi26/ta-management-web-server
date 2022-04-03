@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
 router.get("/login", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/dashboard", {
-      userType: req.session.user.userType
+      userTypes: req.session.user.userTypes,
     });
   } else {
     res.render("pages/landing/login");
@@ -31,7 +31,7 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/dashboard", {
-      userType: req.session.user.userType
+      userTypes: req.session.user.userTypes,
     });
     return;
   }
@@ -49,9 +49,9 @@ router.post("/login", async (req, res) => {
   let authenticatedUser = await checkLoginCredentials(username, password);
   if (authenticatedUser) {
     req.session.authenticated = true;
-    req.session.user = { userType: authenticatedUser.userType };
+    req.session.user = { userTypes: authenticatedUser.userTypes };
     res.render("pages/landing/dashboard", {
-      userType: req.session.user.userType
+      userTypes: req.session.user.userTypes,
     });
   } else {
     res.status(401).json({
@@ -68,7 +68,7 @@ router.post(
       if (err) {
         res.json({ errors: [err.message], response: response_type.AUTH });
       } else {
-        res.render("pages/landing/home")
+        res.render("pages/landing/home");
         // res.json({ errors: [], response: response_type.OK });
       }
     });

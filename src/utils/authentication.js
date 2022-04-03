@@ -1,8 +1,12 @@
-const checkAuthenticationWithUserType = (userTypes, cb) => {
+const checkAuthenticationWithUserType = (paramUserTypes, cb) => {
   return (req, res, ...params) => {
     if (
       req.session.authenticated &&
-      userTypes.some((type) => req.session.user.userType === type)
+      paramUserTypes.some((paramUserType) =>
+        req.session.user.userType.some(
+          (dbUserType) => dbUserType === paramUserType
+        )
+      )
     ) {
       cb(req, res, ...params);
     } else if (req.session.authenticated) {
