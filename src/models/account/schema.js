@@ -12,7 +12,7 @@ const schema = Joi.object({
     })
     .required(),
 
-  studentId: Joi.number().required(),
+  studentId: Joi.string().alphanum().min(9).max(9).required(),
 
   userType: Joi.string()
     .valid("student", "ta", "prof", "sysop", "admin")
