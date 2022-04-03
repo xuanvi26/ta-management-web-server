@@ -4,6 +4,14 @@
 		<h1>Landing dashboard</h1>
 		<form action="/logout" method="POST">
 			<button>Logout</button>
+            <a href="/ta-rating">Rate a TA</a>
+            <% if(userType === "ta" || userType ==="prof") { %> 
+                <a href="/ta-management">Manage TAs</a>
+            <% } if(userType === "admin" || userType === "sysop") { %>
+                <a href="ta-administration">TA Administration</a>
+            <% } if(userType === "sysop") { %>
+                <a href="sysop-tasks">sysop-tasks</a>
+            <% } %>
 		</form>
 	</body>
 </html>

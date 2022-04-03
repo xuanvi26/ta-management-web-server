@@ -21,8 +21,7 @@ router.get("/", (req, res) => {
 router.get("/login", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/dashboard", {
-      errors: [],
-      response: response_type.OK,
+      userType: req.session.user.userType
     });
   } else {
     res.render("pages/landing/login");
@@ -32,8 +31,7 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/dashboard", {
-      errors: [],
-      response: response_type.OK,
+      userType: req.session.user.userType
     });
     return;
   }
@@ -53,8 +51,7 @@ router.post("/login", async (req, res) => {
     req.session.authenticated = true;
     req.session.user = { userType: authenticatedUser.userType };
     res.render("pages/landing/dashboard", {
-      errors: [],
-      response: response_type.OK,
+      userType: req.session.user.userType
     });
   } else {
     res.status(401).json({
@@ -71,7 +68,8 @@ router.post(
       if (err) {
         res.json({ errors: [err.message], response: response_type.AUTH });
       } else {
-        res.json({ errors: [], response: response_type.OK });
+        res.render("pages/landing/home")
+        // res.json({ errors: [], response: response_type.OK });
       }
     });
   })

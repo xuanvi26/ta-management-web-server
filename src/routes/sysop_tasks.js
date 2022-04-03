@@ -7,7 +7,7 @@ const { response_type } = require.main.require("./src/response");
 
 // EXAMPLE OF A GET
 router.get("/", (req, res) => {
-  res.status(404).json("Not implemented");
+  res.status(404).json("Not implemented sysop tasks");
 });
 
 // EXAMPLE OF A POST
