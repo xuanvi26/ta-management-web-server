@@ -4,7 +4,7 @@ async function registerUser(user) {
   const userExists = !!(await model.getUserWithAnyKeys({
     username: user.username,
     email: user.email,
-    studentId: user.studentId
+    mcGillId: user.studentId
   }));
 
   if (userExists) {
