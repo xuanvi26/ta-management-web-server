@@ -26,6 +26,7 @@ async function writeUser(user) {
   return { error };
 }
 
+//e.g., {firstName: "jerry", lastName: "gao"} -> find user with firsName AND lastName
 async function getUserWithKeys(searchTerms) {
   const users = reader.fileAsyncIterator(ACCOUNT_TABLE);
   for await (const rawUser of users) {
@@ -42,10 +43,10 @@ async function getUserWithKeys(searchTerms) {
       logger.error({ error, ctx: "db.core.account" });
     }
   }
-
   return false;
 }
 
+//e.g., {firstName: "jerry", lastName: "gao"} -> find users with firsName OR lastName
 async function getUserWithAnyKeys(searchTerms) {
   const users = reader.fileAsyncIterator(ACCOUNT_TABLE);
   for await (const rawUser of users) {
@@ -62,7 +63,6 @@ async function getUserWithAnyKeys(searchTerms) {
       logger.error({ error, ctx: "db.core.account" });
     }
   }
-
   return false;
 }
 

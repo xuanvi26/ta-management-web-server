@@ -20,6 +20,7 @@ const checkAuthentication = (cb) => {
     }
   };
 };
+
 //"student", "ta", "prof", "sysop", "admin"
 module.exports = {
   checkAuthentication,
