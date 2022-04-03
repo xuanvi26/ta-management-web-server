@@ -3,14 +3,14 @@ const checkAuthenticationWithUserType = (paramUserTypes, cb) => {
     if (
       req.session.authenticated &&
       paramUserTypes.some((paramUserType) =>
-        req.session.user.userType.some(
+        req.session.user.userTypes.some(
           (dbUserType) => dbUserType === paramUserType
         )
       )
     ) {
       cb(req, res, ...params);
     } else if (req.session.authenticated) {
-      res.status(404).render("pages/landing/dashboard");
+      res.status(404).render("pages/landing/dashboard", {userTypes: req.session.user.userTypes});
     } else {
       res.status(404).render("pages/landing/login");
     }
