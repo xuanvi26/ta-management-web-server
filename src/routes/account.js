@@ -6,6 +6,7 @@ const { response_type } = require.main.require("./src/response");
 
 // route to trigger the capture
 router.post("/register", async (req, res) => {
+  console.log("hello");
   const { error, value } = schema.validate(req.body);
   if (error) {
     res.status(400).json({
