@@ -20,7 +20,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body)
   if (req.session.authenticated) {
     res.json({ errors: [], response: response_type.OK });
     return;
@@ -40,10 +39,8 @@ router.post("/login", async (req, res) => {
     req.session.authenticated = true;
     res.render("pages/success", { errors: [], response: response_type.OK });
   } else {
-    res.status(401).json({
-      response: response_type.AUTH,
-      errors: ["Failed login"],
-    });
+    res.status(401);
+    res.render("pages/loginFailed", { errors: [], response: response_type.OK });
   }
 });
 
