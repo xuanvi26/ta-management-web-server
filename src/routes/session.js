@@ -15,12 +15,18 @@ const schema = Joi.object({
 }).required();
 
 router.get("/", (req, res) => {
-  res.render("pages/landing/home");
+  if (req.session.authenticated) {
+    res.render("pages/landing/home", {
+      username: req.session.user.username,
+    });
+  } else {
+    res.render("pages/landing/home");
+  }
 });
 
 router.get("/login", (req, res) => {
   if (req.session.authenticated) {
-    res.render("pages/landing/dashboard", {
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
     });
   } else {
@@ -30,7 +36,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   if (req.session.authenticated) {
-    res.render("pages/landing/dashboard", {
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
     });
     return;
@@ -50,7 +56,7 @@ router.post("/login", async (req, res) => {
   if (authenticatedUser) {
     req.session.authenticated = true;
     req.session.user = { userTypes: authenticatedUser.userTypes };
-    res.render("pages/landing/dashboard", {
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
     });
   } else {

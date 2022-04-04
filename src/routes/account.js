@@ -5,7 +5,14 @@ const schema = require.main.require("./src/models/account/schema");
 const { response_type } = require.main.require("./src/response");
 
 router.get("/register", (req, res) => {
-  res.render("pages/landing/register", {errors: []});
+  if (req.session.authenticated) {
+    res.render("pages/landing/home", {
+      userTypes: req.session.user.userTypes,
+    });
+  } else {
+    res.render("pages/landing/register");
+  }
+  // res.render("pages/landing/register", {errors: []});
 });
 
 router.post("/register", async (req, res) => {
