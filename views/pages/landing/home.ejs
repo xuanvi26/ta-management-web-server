@@ -1,7 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-	<body class="container">
-		<h1>Welcome</h1>
+<html>
+	<% var username; %>
+    <% if(username === undefined) { %>
+		<%- include('../../partials/default_header.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "sysop" }) === "sysop") { %>
+		<%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "admin" }) === "admin") { %>
+		<%- include('../../partials/dashboard/admin_dashboard.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "prof" }) === "prof") { %>
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "ta" }) === "ta") { %>
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %>			
+	<% } else if(userTypes.find(function (type) { return type === "student" }) === "student") { %>
+		<%- include('../../partials/dashboard/student_dashboard.ejs') %>
+	<% } %>
+	<body>
+		<h1><%= username === undefined ? "NOT LOGGED IN" : `LOGGED IN, ${username}` %></h1>
 		<a href="/login">Login</a>
 		<a href="/account/register">Register</a>
 		<form action="/logout" method="POST">

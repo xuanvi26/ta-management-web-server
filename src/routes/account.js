@@ -8,11 +8,11 @@ router.get("/register", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
+      username: req.session.user.username
     });
   } else {
-    res.render("pages/landing/register");
+    res.render("pages/landing/register", {errors: []});
   }
-  // res.render("pages/landing/register", {errors: []});
 });
 
 router.post("/register", async (req, res) => {
