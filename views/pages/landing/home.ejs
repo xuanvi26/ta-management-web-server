@@ -1,24 +1,106 @@
 <html>
-	<% var username; %>
-    <% if(username === undefined) { %>
-		<%- include('../../partials/default_header.ejs') %>
-	<% } else if(userTypes.find(function (type) { return type === "sysop" }) === "sysop") { %>
-		<%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
-	<% } else if(userTypes.find(function (type) { return type === "admin" }) === "admin") { %>
-		<%- include('../../partials/dashboard/admin_dashboard.ejs') %>
-	<% } else if(userTypes.find(function (type) { return type === "prof" }) === "prof") { %>
-		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %>
-	<% } else if(userTypes.find(function (type) { return type === "ta" }) === "ta") { %>
-		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %>			
-	<% } else if(userTypes.find(function (type) { return type === "student" }) === "student") { %>
-		<%- include('../../partials/dashboard/student_dashboard.ejs') %>
-	<% } %>
+	<% var username; %> <% if(username === undefined) { %> <%-
+	include('../../partials/default_header.ejs') %> <% } else
+	if(userTypes.find(function (type) { return type === "sysop" }) === "sysop")
+	{ %> <%- include('../../partials/dashboard/sysop_dashboard.ejs') %> <% }
+	else if(userTypes.find(function (type) { return type === "admin" }) ===
+	"admin") { %> <%- include('../../partials/dashboard/admin_dashboard.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "prof" }) ===
+	"prof") { %> <%- include('../../partials/dashboard/ta&prof_dashboard.ejs')
+	%> <% } else if(userTypes.find(function (type) { return type === "ta" }) ===
+	"ta") { %> <%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %>
+	<% } else if(userTypes.find(function (type) { return type === "student" })
+	=== "student") { %> <%-
+	include('../../partials/dashboard/student_dashboard.ejs') %> <% } %>
 	<body>
-		<h1><%= username === undefined ? "NOT LOGGED IN" : `LOGGED IN, ${username}` %></h1>
-		<a href="/login">Login</a>
-		<a href="/account/register">Register</a>
-		<form action="/logout" method="POST">
-			<button>Logout</button>
-		</form>
+		<main role="main">
+			<section class="jumbotron text-center">
+				<div class="container">
+					<h1 class="jumbotron-heading">Welcome to TA-web-services!</h1>
+					<p class="lead text-muted">
+						A new all-in-one TA management system built for McGill University. Manage, administer, and rate TAs, and so much more! Create your account to use all features.
+					</p>
+					<p>
+						<a href="/account/register" class="btn btn-primary my-2"
+							>Get started</a
+						>
+						<a href="/login" class="btn btn-secondary my-2"
+							>Login</a
+						>
+					</p>
+				</div>
+			</section>
+
+			<div class="album py-5 bg-light">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="card mb-4 shadow-sm">
+								<img
+									class="card-img-top"
+									data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+									alt="Thumbnail [100%x225]"
+									style="
+										height: 225px;
+										width: 100%;
+										display: block;
+									"
+									src="../../images/people-fill.svg"
+									data-holder-rendered="true"
+								/>
+								<div class="card-body">
+									<p class="card-text">
+										Manage and administrate TAs, see TA info, history, contact information, and more.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card mb-4 shadow-sm">
+								<img
+									class="card-img-top"
+									data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+									alt="Thumbnail [100%x225]"
+									src="../../images/person-plus-fill.svg"
+									data-holder-rendered="true"
+									style="
+										height: 225px;
+										width: 100%;
+										display: block;
+									"
+								/>
+								<div class="card-body">
+									<p class="card-text">
+										Add, create, and manage accounts. Create your account to explore all the features!
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card mb-4 shadow-sm">
+								<img
+									class="card-img-top"
+									data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+									alt="Thumbnail [100%x225]"
+									src="../../images/star-half.svg"
+									data-holder-rendered="true"
+									style="
+										height: 225px;
+										width: 100%;
+										display: block;
+										padding: 15px;
+									"
+								>
+								<div class="card-body">
+									<p class="card-text">
+										Rate a TA! See how a TA has performed in their previous courses.
+									</p>
+								</div>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</main>
 	</body>
 </html>
