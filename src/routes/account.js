@@ -25,12 +25,15 @@ router.post("/register", async (req, res) => {
   const result = await registerUser(value);
 
   if (result.error) {
-    res.status(400).json({
-      response: response_type.BAD_REQUEST,
-      errors: result.error.details.map((detail) => detail.message),
-    });
+    res.status(400).render("pages/landing/register", {errors: result.error.details.map((detail) => detail.message)})
+    return;
+    // res.status(400).json({
+    //   response: response_type.BAD_REQUEST,
+    //   errors: result.error.details.map((detail) => detail.message),
+    // });
   } else {
-    res.json({ response: response_type.OK, errors: [] });
+    res.render("pages/landing/login", {successRegisterMsg: "Registration successful. ", errors: []});
+    // res.json({ response: response_type.OK, errors: [] });
   }
 });
 

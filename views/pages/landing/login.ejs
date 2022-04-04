@@ -1,5 +1,6 @@
 <html>
 	<%- include('../../partials/default_header.ejs') %>
+	<% var successRegisterMsg; var errors;%>
 	<body>
 		<div class="main-body-container">
 			<h3 class="text-center">Login to</h3>
@@ -51,6 +52,23 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<% } %>
+				<% if(successRegisterMsg) { %>
+					<div
+						class="alert alert-success alert-dismissible fade show"
+						role="alert"
+					>
+						<strong><%=`${successRegisterMsg}` %></strong>
+						Please login.
+						<button
+							type="button"
+							class="close"
+							data-dismiss="alert"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 				<% } %>
 			</form>
 		</div>

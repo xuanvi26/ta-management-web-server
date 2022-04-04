@@ -16,10 +16,11 @@
 		<main role="main">
 			<section class="jumbotron text-center">
 				<div class="container">
-					<h1 class="jumbotron-heading">Welcome to TA-web-services!</h1>
+					<h1 class="jumbotron-heading"><%= username === undefined ? `Welcome to TA-web-services!` : `Welcome to TA-web-services, ${username}!` %></h1>
 					<p class="lead text-muted">
-						A new all-in-one TA management system built for McGill University. Manage, administer, and rate TAs, and so much more! Create your account to use all features.
+						A new all-in-one TA management system built for McGill University. Manage, administer, and rate TAs, and so much more! <%= username === undefined ? `Create your account to use all features.` : `Navigate the navbar to start working!` %>
 					</p>
+					<% if(username === undefined) { %>
 					<p>
 						<a href="/account/register" class="btn btn-primary my-2"
 							>Get started</a
@@ -28,6 +29,7 @@
 							>Login</a
 						>
 					</p>
+					<% } %>
 				</div>
 			</section>
 
