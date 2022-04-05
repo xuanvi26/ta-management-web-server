@@ -1,5 +1,13 @@
 <html>
 	<%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+    <script>
+        function handleDeleteUserClick(username) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "POST", "/account/remove", false );
+            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xmlHttp.send(`username=${username}`);
+        }
+    </script>
     <body>
         <div class="main-body-container">
             <h3 class="text-center">All user matches</h3>
@@ -28,7 +36,7 @@
                     <td style="vertical-align: middle;"><%= user.userTypes.toString() %></td>
                     <td style="vertical-align: middle;"><%= user.registeredCourses.toString() %></td>
                     <td><button class="btn btn-outline-secondary">Edit</button></td>
-                    <td><button class="btn btn-outline-danger">Delete</button></td>
+                    <td><button onClick="handleDeleteUserClick('<%= user.username %>')" class="btn btn-outline-danger">Delete</button></td>
                   </tr>
                   <% } %>
                 </tbody>

@@ -42,7 +42,7 @@ async function deleteUser(username) {
   }
   }
 
-  const error = await fs.promise.rename(ACCOUNT_TABLE_TMP, ACCOUNT_TABLE);
+  const error = await fs.promises.rename(ACCOUNT_TABLE_TMP, ACCOUNT_TABLE);
   if(error) {
     logger.error({ error, ctx: "db.core.account" });
     return false;
