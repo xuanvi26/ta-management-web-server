@@ -25,6 +25,16 @@ router.get(
   })
 );
 
+router.get(
+  "/search-users",
+  checkAuthenticationWithUserType(["sysop"], (req, res) => {
+    res.render("pages/sysop_tasks/sysop_search_users.ejs", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username
+    });
+  })
+);
+
 // EXAMPLE OF A POST
 router.post("/test", async (req, res) => {
   console.log(req.body);
