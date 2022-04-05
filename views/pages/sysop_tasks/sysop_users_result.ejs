@@ -1,11 +1,8 @@
 <html>
 	<%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
     <script>
-        function handleDeleteUserClick(username) {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "POST", "/account/remove", false );
-            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xmlHttp.send(`username=${username}`);
+        function handleEditUser(username) {
+            window.location.href = `/account?username=${username}`;
         }
     </script>
     <body>
@@ -25,18 +22,25 @@
                     <th scope="col">Delete</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="container">
                     <% for(let user of users) { %>
                   <tr>
                     <td style="vertical-align: middle;"><%= user.username %></td>
                     <td style="vertical-align: middle;"><%= user.firstName %></td>
                     <td style="vertical-align: middle;"><%= user.lastName %></td>
                     <td style="vertical-align: middle;"><%= user.email %></td>
-                    <td style="vertical-align: middle;"><%= user.mcGillId %></td>
-                    <td style="vertical-align: middle;"><%= user.userTypes.toString() %></td>
-                    <td style="vertical-align: middle;"><%= user.registeredCourses.toString() %></td>
-                    <td><button class="btn btn-outline-secondary">Edit</button></td>
-                    <td><button onClick="handleDeleteUserClick('<%= user.username %>')" class="btn btn-outline-danger">Delete</button></td>
+                    <td style="vertical-align: middle;"><%= user.mcGillId %></input></td>
+                    <td style="vertical-align: middle;"><%= user.userTypes.toString()%></input></td>
+                    <td style="vertical-align: middle;"><%= user.registeredCourses.toString()%></input></td>
+                    <td>
+                        <button type="submit" class="btn btn-outline-secondary" onclick="handleEditUser('<%= user.username %>')">Edit</button>
+                    <td>
+                        <form action="/account/remove" method="POST" style="margin:0">
+                            <input style="display:none" type="text" name="username" value="<%= user.username %>"></input>
+                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                    
                   </tr>
                   <% } %>
                 </tbody>
