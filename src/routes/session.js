@@ -15,31 +15,39 @@ const schema = Joi.object({
 }).required();
 
 router.get("/", (req, res) => {
-  res.render("pages/landing/home");
+  if (req.session.authenticated) {
+    res.render("pages/landing/home", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
+    });
+  } else {
+    res.render("pages/landing/home");
+  }
 });
 
 router.get("/login", (req, res) => {
   if (req.session.authenticated) {
-    res.render("pages/landing/dashboard", {
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
     });
   } else {
-    res.render("pages/landing/login");
+    res.render("pages/landing/login", { errors: [] });
   }
 });
 
 router.post("/login", async (req, res) => {
   if (req.session.authenticated) {
-    res.render("pages/landing/dashboard", {
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
     });
     return;
   }
 
   let { error, value } = schema.validate(req.body);
   if (error) {
-    res.status(400).json({
-      response: response_type.BAD_REQUEST,
+    res.status(400).render("pages/landing/login", {
       errors: error.details.map((detail) => detail.message),
     });
     return;
@@ -49,14 +57,18 @@ router.post("/login", async (req, res) => {
   let authenticatedUser = await checkLoginCredentials(username, password);
   if (authenticatedUser) {
     req.session.authenticated = true;
-    req.session.user = { userTypes: authenticatedUser.userTypes };
-    res.render("pages/landing/dashboard", {
+    req.session.user = {
+      userTypes: authenticatedUser.userTypes,
+      username: authenticatedUser.username,
+    };
+    res.render("pages/landing/home", {
       userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
     });
   } else {
-    res.status(401).json({
+    res.status(400).render("pages/landing/login", {
       response: response_type.AUTH,
-      errors: ["Failed login"],
+      errors: ["Unable to authenticate user"],
     });
   }
 });
@@ -66,10 +78,12 @@ router.post(
   checkAuthentication((req, res) => {
     req.session.destroy((err) => {
       if (err) {
-        res.json({ errors: [err.message], response: response_type.AUTH });
+        res.json({
+          errors: [err.message],
+          response: response_type.AUTH,
+        });
       } else {
         res.render("pages/landing/home");
-        // res.json({ errors: [], response: response_type.OK });
       }
     });
   })

@@ -1,10 +1,9 @@
 <html>
-    <%- include('../../partials/default_header.ejs') %>
+    <%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
     <% var errors; %>
 	<body>
         <div class="main-body-container">
-            <h3 class="text-center">Welcome to TA-web-services!</h3>
-            <h3 class="text-center">Register a new account</h3>
+            <h3 class="text-center">Add a user</h3>
             <form 
                 class="container single-page-form-container border border-primary rounded"
                 action="/account/register"
@@ -148,7 +147,7 @@
                 <div class="form-group row">
                     <div class="col-sm-10">
                         <button type="submit" class="btn btn-primary">
-                            Register
+                            Create account
                         </button>
                     </div>
                 </div>
@@ -157,7 +156,7 @@
                     class="alert alert-danger alert-dismissible fade show"
                     role="alert"
                 >
-                    <strong>Invalid Registration: </strong><%= errors[0] %>. Please
+                    <strong>Invalid account creation: </strong><%= errors[0] %>. Please
                     try again.
                     <button
                         type="button"

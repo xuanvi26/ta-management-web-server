@@ -10,7 +10,7 @@ const checkAuthenticationWithUserType = (paramUserTypes, cb) => {
     ) {
       cb(req, res, ...params);
     } else if (req.session.authenticated) {
-      res.status(404).render("pages/landing/dashboard", {userTypes: req.session.user.userTypes});
+      res.status(404).render("pages/landing/home");
     } else {
       res.status(404).render("pages/landing/login");
     }
@@ -27,7 +27,6 @@ const checkAuthentication = (cb) => {
   };
 };
 
-//"student", "ta", "prof", "sysop", "admin"
 module.exports = {
   checkAuthentication,
   checkAuthenticationWithUserType,
