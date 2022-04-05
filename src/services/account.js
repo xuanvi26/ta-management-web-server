@@ -15,6 +15,23 @@ async function registerUser(user) {
 	return await model.writeUser(user);
 }
 
+async function findUsers(searchString) {
+	let keys = schema.keys;
+	const users = await model.getUsersWithAnyKeys({
+		firstName: searchString,
+		lastName: searchString,
+		username: searchString,
+		email: searchString,
+		mcGillId: searchString,
+	});
+
+	return users;
+}
+
+async function deleteUser(username) {
+	return await model.deleteUser(username);
+}
+
 async function handleUnauthenticatedUserRegistration(req, res) {
 	req.body.registeredCourses = req.body.registeredCourses
 		? req.body.registeredCourses.split(",")
@@ -87,4 +104,6 @@ module.exports = {
 	registerUser,
 	handleSysopUserRegistration,
 	handleUnauthenticatedUserRegistration,
+	findUsers,
+	deleteUser
 };

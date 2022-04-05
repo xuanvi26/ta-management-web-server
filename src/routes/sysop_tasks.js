@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { checkAuthentication, checkAuthenticationWithUserType } = require.main.require(
+const { checkAuthenticationWithUserType } = require.main.require(
   "./src/utils/authentication"
 );
 const { response_type } = require.main.require("./src/response");

@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, handleSysopUserRegistration, handleUnauthenticatedUserRegistration } = require.main.require("./src/services/account");
+const { checkAuthenticationWithUserType } = require.main.require(
+	"./src/utils/authentication"
+  );
+const { registerUser, handleSysopUserRegistration, handleUnauthenticatedUserRegistration, findUsers } = require.main.require("./src/services/account");
 const { response_type } = require.main.require("./src/response");
 
 router.get("/register", (req, res) => {
@@ -13,6 +16,35 @@ router.get("/register", (req, res) => {
 		res.render("pages/landing/register", { errors: [] });
 	}
 });
+
+router.get("/users", checkAuthenticationWithUserType(["sysop"], async (req, res) => {
+	console.log(req.query);
+	if (!req.query.search_term) {
+		res.render("pages/sysop_tasks/sysop_search_users.ejs", {
+			userTypes: req.session.user.userTypes,
+			username: req.session.user.username,
+			error: "Please enter a search term."
+		});
+	}
+	else {
+		const users = await findUsers(req.query.search_term);
+
+	if (users.length === 0) {
+		res.render("pages/sysop_tasks/sysop_search_users.ejs", {
+			userTypes: req.session.user.userTypes,
+			username: req.session.user.username,
+			error: "No user matched search term."
+		});
+	} else {
+		console.log(users);
+		res.render("pages/sysop_tasks/sysop_users_result.ejs", {
+			userTypes: req.session.user.userTypes,
+			username: req.session.user.username,
+			users,
+		});
+	}
+	}
+}));
 
 router.post("/register", async (req, res) => {
   // register normally
