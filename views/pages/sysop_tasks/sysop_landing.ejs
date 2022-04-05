@@ -1,4 +1,5 @@
 <html>
+    <% var successRegisterMsg; %>
     <%- include("../../partials/dashboard/sysop_dashboard.ejs") %> 
     <body>
         <main role="main">
@@ -6,7 +7,22 @@
 				<div class="container">
 					<h1 class="jumbotron-heading">Sysop Tasks</h1>
 			</section>
-
+            <% if(successRegisterMsg) { %>
+                <div
+                    class="alert alert-success alert-dismissible fade show container"
+                    role="alert"
+                >
+                    <strong>Success! </strong> User account created. 
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="alert"
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
 			<div class="album py-5 bg-light">
 				<div class="container">
 					<div class="row">

@@ -1,40 +1,28 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser } = require.main.require("./src/services/account");
-const schema = require.main.require("./src/models/account/schema");
+const { registerUser, handleSysopUserRegistration, handleUnauthenticatedUserRegistration } = require.main.require("./src/services/account");
 const { response_type } = require.main.require("./src/response");
 
 router.get("/register", (req, res) => {
-  if (req.session.authenticated) {
-    res.render("pages/landing/home", {
-      userTypes: req.session.user.userTypes,
-      username: req.session.user.username
-    });
-  } else {
-    res.render("pages/landing/register", {errors: []});
-  }
+	if (req.session.authenticated) {
+		res.render("pages/landing/home", {
+			userTypes: req.session.user.userTypes,
+			username: req.session.user.username,
+		});
+	} else {
+		res.render("pages/landing/register", { errors: [] });
+	}
 });
 
 router.post("/register", async (req, res) => {
-  req.body.registeredCourses = req.body.registeredCourses ? req.body.registeredCourses.split(",") : [];
-  const { error, value } = schema.validate(req.body);
-  if (error) {
-    res.status(400).render("pages/landing/register", {errors: error.details.map((detail) => detail.message)})
-    return;
-  }
-  const result = await registerUser(value);
-
-  if (result.error) {
-    res.status(400).render("pages/landing/register", {errors: result.error.details.map((detail) => detail.message)})
-    return;
-    // res.status(400).json({
-    //   response: response_type.BAD_REQUEST,
-    //   errors: result.error.details.map((detail) => detail.message),
-    // });
-  } else {
-    res.render("pages/landing/login", {successRegisterMsg: "Registration successful. ", errors: []});
-    // res.json({ response: response_type.OK, errors: [] });
-  }
+  // register normally
+	if (!req.session.authenticated) {
+	  await handleUnauthenticatedUserRegistration(req, res);
+	}
+	// register from sysop functions
+	else if (req.session.user.userTypes.includes("sysop")) {
+    await handleSysopUserRegistration(req, res);
+	}
 });
 
 module.exports = router;
