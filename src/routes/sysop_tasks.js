@@ -5,11 +5,20 @@ const { checkAuthentication, checkAuthenticationWithUserType } = require.main.re
 );
 const { response_type } = require.main.require("./src/response");
 
-// EXAMPLE OF A GET
 router.get(
   "/",
   checkAuthenticationWithUserType(["sysop"], (req, res) => {
     res.render("pages/sysop_tasks/sysop_landing.ejs", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username
+    });
+  })
+);
+
+router.get(
+  "/add-user",
+  checkAuthenticationWithUserType(["sysop"], (req, res) => {
+    res.render("pages/sysop_tasks/sysop_add_user.ejs", {
       userTypes: req.session.user.userTypes,
       username: req.session.user.username
     });
