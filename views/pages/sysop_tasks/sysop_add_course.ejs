@@ -1,0 +1,61 @@
+<html>
+    <%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+	<body>
+        <div class="main-body-container">
+            <h3 class="text-center">Add a course</h3>
+            <h4 class="text-center">Note: duplicate courses are ignored</h4>
+            <form
+				class="container single-page-form-container border border-primary rounded"
+				action="/sysop-tasks/add-course"
+				method="POST"
+			>
+				<div class="form-group">
+					<label for="inputCourseName3">Course name</label>
+					<input
+						class="form-control"
+						id="inputCourseName3"
+						placeholder="E.g.: COMP"
+						name="courseName"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="inputCourseNum3">Course number</label>
+					<input
+						type="password"
+						class="form-control"
+						id="inputCourseNum3"
+						placeholder="E.g.: 307"
+						name="courseNum"
+					/>
+				</div>
+                <div class="form-group">
+					<label for="inputCourseTerm3">Course term</label>
+					<input
+						type="password"
+						class="form-control"
+						id="inputCourseTerm3"
+						placeholder="E.g.: Fall 2022"
+						name="courseTerm"
+					/>
+				</div>
+                <div class="form-group">
+					<label for="inputInstructor3">Instructor full name</label>
+					<input
+						type="password"
+						class="form-control"
+						id="inputInstructor3"
+						placeholder="E.g.: Joseph Vibyhal"
+						name="instructor"
+					/>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">
+							Add course
+						</button>
+					</div>
+				</div>
+			</form>
+        </div>
+	</body>
+</html>
