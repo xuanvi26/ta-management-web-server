@@ -18,7 +18,7 @@
 				<div class="container">
 					<h1 class="jumbotron-heading"><%= username === undefined ? `Welcome to TA-web-services!` : `Welcome to TA-web-services, ${username}!` %></h1>
 					<p class="lead text-muted">
-						A new all-in-one TA management system built for McGill University. Manage, administer, and rate TAs, and so much more! <%= username === undefined ? `Create your account to use all features.` : `Navigate the navbar to start working!` %>
+						A new all-in-one TA management system built for McGill University. Manage, administer, and rate TAs, and so much more! <%= username === undefined ? `Create your account to use all features.` : `Navigate the navbar to start working.` %>
 					</p>
 					<% if(username === undefined) { %>
 					<p>
@@ -46,6 +46,7 @@
 										height: 225px;
 										width: 100%;
 										display: block;
+										padding: 1vw;
 									"
 									src="../../images/people-fill.svg"
 									data-holder-rendered="true"
@@ -69,6 +70,7 @@
 										height: 225px;
 										width: 100%;
 										display: block;
+										padding: 1vw;
 									"
 								/>
 								<div class="card-body">
@@ -90,7 +92,7 @@
 										height: 225px;
 										width: 100%;
 										display: block;
-										padding: 15px;
+										padding: 20px;
 									"
 								>
 								<div class="card-body">
