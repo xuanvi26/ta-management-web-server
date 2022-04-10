@@ -8,7 +8,6 @@ const {
 } = require.main.require("./src/services/course");
 const { response_type } = require.main.require("./src/response");
 
-
 // LANDING PAGE OF TA_MANAGEMENT (asks to input a course)
 router.get("/", checkAuthenticationWithUserType(["ta","prof"],(req, res) => {
   //res.status(404).json("Not implemented ta_management");
