@@ -14,11 +14,13 @@ const schema = Joi.object({
 
   mcGillId: Joi.string().alphanum().min(9).max(9).required(),
 
-  userTypes: Joi.array().items(Joi.string().valid("student", "ta", "prof", "sysop", "admin")).required(),
+  userTypes: Joi.array()
+    .items(Joi.string().valid("student", "ta", "prof", "sysop", "admin"))
+    .required(),
 
-  username: Joi.string().alphanum().min(3).max(30).required(),
+  username: Joi.string().alphanum().min(2).max(30).required(),
 
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+  password: Joi.string().min(3).required(),
 
   registeredCourses: Joi.array().items(Joi.string()),
 }).required();
