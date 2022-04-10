@@ -58,8 +58,7 @@ router.get(
 router.post("/register", async (req, res) => {
   if (!req.session.authenticated) {
     await handleUnauthenticatedUserRegistration(req, res);
-  }
-  else if (req.session.user.userTypes.includes("sysop")) {
+  } else if (req.session.user.userTypes.includes("sysop")) {
     await handleSysopUserRegistration(req, res);
   }
 });
