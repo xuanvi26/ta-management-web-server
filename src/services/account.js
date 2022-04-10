@@ -9,7 +9,16 @@ async function registerUser(user) {
   }));
 
   if (userExists) {
-    return { error: { details: [{ message: "Registration failed" }] } };
+    return {
+      error: {
+        details: [
+          {
+            message:
+              "A user with the same username, email, or McGill ID exists. Registration Failed.",
+          },
+        ],
+      },
+    };
   }
 
   return await model.writeUser(user);
