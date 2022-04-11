@@ -4,7 +4,7 @@ const { checkAuthentication, checkAuthenticationWithUserType } = require.main.re
   "./src/utils/authentication"
 );
 const {
-  findCourse
+  findCourse,
 } = require.main.require("./src/services/course");
 const { response_type } = require.main.require("./src/response");
 const { writeOH } = require.main.require("./src/models/course");
