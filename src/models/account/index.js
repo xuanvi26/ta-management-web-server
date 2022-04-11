@@ -111,7 +111,7 @@ async function editUser(inputUser) {
           hashPassword: false,
         });
         if (error) {
-          return error;
+          return { error };
         }
       } else {
         await writer.writeLineToFile(rawUser, ACCOUNT_TABLE_TMP);
