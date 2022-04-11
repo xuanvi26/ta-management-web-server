@@ -9,6 +9,7 @@ async function findCourse(searchString){
     return courses;
 }
 
+
 module.exports = {
     findCourse,
 };

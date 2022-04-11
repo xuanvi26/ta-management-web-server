@@ -29,7 +29,6 @@ async function writeUser(
       error = { details: [{ message: error.message }] };
     }
   }
-
   return { error };
 }
 
