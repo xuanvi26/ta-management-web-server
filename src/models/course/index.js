@@ -6,8 +6,8 @@ const schema = require.main.require("./src/models/course/schema");
 const logger = require.main.require("./src/utils/logger");
 const fs = require("fs");
 
-const COURSE_TABLE = "./src/models/course/db.json";
-const COURSE_TABLE_TMP = "./src/models/course/db.json.tmp";
+const COURSE_TABLE = "./src/models/course/course.json";
+const COURSE_TABLE_TMP = "./src/models/course/course.json.tmp";
 
 async function getCourseWithName(searchTerms) {
     const courses = reader.fileAsyncIterator(COURSE_TABLE);
