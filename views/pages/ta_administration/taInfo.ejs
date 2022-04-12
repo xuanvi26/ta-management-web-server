@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   
 <html>
+    <%- include("../../partials/dashboard/admin_dashboard.ejs") %> 
     <head>
         <title>
               
@@ -8,14 +9,26 @@
     </head>
       
     <body>
-        <h1>View TA Info/History</h1>
-        <p>Please select the TA</p>
-        <select name="TA" id="TA">
-            <option value="a">Fuanne</option>
-            <option value="b">Anne</option>
-            <option value="c">Antonio</option>
-            <option value="d">Massimo</option>
-        </select>
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">View TA Info/History</h1>
+                <p>Please select the TA you are looking for</p>
+        </section>
+
+        <!-- // IMPLEMENT A SEARCH BAR -->
+
+        <!-- <h1>View TA Info/History</h1> -->
+        <div style="margin: 10%;">
+            <p>Please select the TA</p>
+            <select name="TA" id="TA">
+                <option value="a">Fuanne</option>
+                <option value="b">Anne</option>
+                <option value="c">Antonio</option>
+                <option value="d">Massimo</option>
+            </select>
+        </div>
+        
+        
 
     </body>
 </html>
