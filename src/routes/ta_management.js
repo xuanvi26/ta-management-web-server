@@ -9,7 +9,6 @@ const {
 const { response_type } = require.main.require("./src/response");
 const { writeOH } = require.main.require("./src/models/course");
 
-
 // LANDING PAGE OF TA_MANAGEMENT
 router.get("/", checkAuthenticationWithUserType(["ta","prof"],(req, res) => {
   //res.status(404).json("Not implemented ta_management");
