@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   
 <html>
+    <%- include("../../partials/dashboard/admin_dashboard.ejs") %> 
     <head>
         <title>
               
@@ -8,9 +9,60 @@
     </head>
       
     <body>
-        <h1>Add/Remove TA to Course</h1>
-        <p>Please select the course</p>
-        <select name="TA" id="TA">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Add/Remove TA to Course</h1>
+                <p>Please select the course you are looking for</p>
+        </section>
+
+        <div class="main-body-container">
+            <!-- <form class="form-inline" style="margin-top:2vw" method="GET" action="/ta-administration/courses">
+                <input 
+                    name="course_name_search_fu"
+                    class="form-control mr-sm-2"
+					style="width: 90%"
+					type="search"
+					placeholder="Search for a course (e.g.: COMP 307)"
+					aria-label="Search"/>
+                <button
+                    class="btn btn-outline-secondary my-2 my-sm-0"
+                    type="submit"
+                >
+                    Search
+                </button>
+            </form> -->
+            <form 
+                class="form-inline" 
+                style="margin-top:2vw" 
+                method="GET" 
+                action="/ta-administration/courses">
+                <input 
+                    name="course_name_search"
+                    class="form-control mr-sm-2"
+                    style="width: 90%"
+                    type="search"
+                    placeholder="Search for a course (e.g.: COMP 307)"
+                    aria-label="Search"/>
+                <button 
+                    class="btn btn-outline-secondary my-2 my-sm-0"
+                    type="submit"
+                > Search 
+                </button>
+            </form>
+
+        </div>
+
+        
+
+
+
+
+
+
+
+        <!-- <h1>Add/Remove TA to Course</h1>
+        <p>Please select the course</p> -->
+        <!-- <select name="TA" id="TA">
             <option value="a">Fuanne</option>
             <option value="b">Anne</option>
             <option value="c">Antonio</option>
@@ -24,7 +76,7 @@
             <option value="d">Massimo</option>
         </select>
         <br>
-        <input type="submit" value="submit">
+        <input type="submit" value="submit"> -->
 
     </body>
 </html>
