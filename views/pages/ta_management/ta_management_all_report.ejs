@@ -1,5 +1,29 @@
 <html>
+    <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
+    <% var errors; %>
     <body>
-        <h3>All TAs Report</h3>
+        <div class="main-body-container">
+            <h3 class="text-center">All TAs Report for course</h3>
+            <table class="table container" style="margin-top: 2vw;">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">TA Name</th>
+                        <th scope="col">Assignmed Responsibility</th>
+                        <th scope="col">Student Rating Average</th>
+                        <th scope="col">Performance Log Comments</th>
+                        <th scope="col">Student Rating Comments</th>
+                    </tr>
+                </thead>
+                <tbody class="container">
+                    <tr>
+                        <td style="vertical-align: middle;">TaName</td>
+                        <td style="vertical-align: middle;">Office Hours</td>
+                        <td style="vertical-align: middle;">4.7</td>
+                        <td style="vertical-align: middle;">Great TA, does the work on time</td>
+                        <td style="vertical-align: middle;">This TA was very helpful</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
