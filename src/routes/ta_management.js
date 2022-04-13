@@ -8,6 +8,8 @@ const {
 } = require.main.require("./src/services/course");
 const { response_type } = require.main.require("./src/response");
 const { writeOH } = require.main.require("./src/models/course");
+//const sessionStorage = require('sessionstorage-for-node');
+//const storage = require('node-sessionstorage');
 
 // LANDING PAGE OF TA_MANAGEMENT
 router.get("/", checkAuthenticationWithUserType(["ta","prof"],(req, res) => {
@@ -61,6 +63,7 @@ router.get(
           error: "No course matched the search term."
         });
       } else{
+        //sessionStorage.setItem("currentCourse", courses[0].course_name);
         res.render("pages/ta_management/ta_management_course_result.ejs", {
           userTypes: req.session.user.userTypes,
           username: req.session.user.username,
@@ -82,9 +85,17 @@ router.get(
   })
 );
 
+//POST REQUEST for office hours and responsibilities
 router.post(
-  "/add-office-hours-and-responsibilities",
+  "/ta-management/add-office-hours-and-responsibilities",
   checkAuthenticationWithUserType(["ta","prof"], async (req,res) => {
+    //var courseName = sessionStorage.getItem("currentCourse");
+    res.render("pages/ta_management/ta_management_course_result.ejs", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
+      course: "hi",
+    });
+    /*
     const result = await writeOH(req.body);
     if(result.error){
       res.status(400).render("pages/ta_management/ta_management_course_results.ejs", {
@@ -101,7 +112,7 @@ router.post(
         userTypes: req.session.user.userTypes,
         username: req.session.user.username,
       });
-    }
+    } */
   })
 );
 
@@ -116,6 +127,18 @@ router.get(
   })
 );
 
+//POST REQUEST for TA performance log
+router.post(
+  "/ta-management/add-performance",
+  checkAuthenticationWithUserType(["ta","prof"], async (req,res) => {
+    //var courseName = sessionStorage.getItem("currentCourse");
+    res.render("pages/ta_management/ta_management_course_result.ejs", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
+      course: "hi",
+    });
+  })
+);
 
 //WISH LIST LANDING PAGE
 router.get(
@@ -124,6 +147,19 @@ router.get(
     res.render("pages/ta_management/ta_management_wish_list.ejs", {
       userTypes: req.session.user.userTypes,
       username: req.session.user.username,
+    });
+  })
+);
+
+//POST REQUEST for TA wish list
+router.post(
+  "/ta-management/add-wish-list",
+  checkAuthenticationWithUserType(["ta","prof"], async (req,res) => {
+    //var courseName = sessionStorage.getItem("currentCourse");
+    res.render("pages/ta_management/ta_management_course_result.ejs", {
+      userTypes: req.session.user.userTypes,
+      username: req.session.user.username,
+      course: "hi",
     });
   })
 );
