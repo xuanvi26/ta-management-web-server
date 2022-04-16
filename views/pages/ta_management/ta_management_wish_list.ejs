@@ -7,7 +7,7 @@
             <p class="text-center">Identify to the TA administrator which TA you would like to have next semester</p>
             <form 
                 class= "container single-page-form-container border border-primary rounded"
-                action="ta-management/add-wish-list"
+                action="/ta-management/add-wish-list"
                 method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -15,17 +15,19 @@
 						<input
 							class="form-control"
 							id="termMY"
-							placeholder="Term Month and Year (required, e.g.: Winter 2022"
-							name="some_term_month_year"
+							placeholder="Term Month and Year (required, e.g.: Winter 2022)"
+							name="termMonthYear"
 						/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="courseNum">Course</label>
+                        <label for="courseName">Course (cannot edit)</label>
 						<input
 							class="form-control"
-							id="courseNum"
-							placeholder="Course Name (required, e.g.: COMP 307)"
-							name="someCourseNum"
+							id="courseName"
+							placeholder= "<%= `${course}` %>"
+							name="courseName"
+                            value="<%= `${course}` %>"
+                            readonly
 						/>
                     </div>
                 </div>
@@ -81,7 +83,7 @@
                         class="alert alert-danger alert-dismissible fade show"
                         role="alert"
                     >
-                        <strong>Invalid Registration: </strong><%= errors[0] %>. Please
+                        <strong>Invalid: </strong><%= errors[0] %>. Please
                         try again.
                         <button
                             type="button"
