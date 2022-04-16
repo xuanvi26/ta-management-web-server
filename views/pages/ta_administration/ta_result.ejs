@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+<%- include("../../partials/dashboard/admin_dashboard.ejs") %>
+
+    <head>
+        <title> </title>
+    </head>
+
+    <body>
+        <div class="main-body-container">
+            <h3 class="text-center">You selected
+                <%= ta.TA_name %>
+            </h3>
+            <table class="table container" style="margin-top: 2vw">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Ta name</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Enrollment</th>
+                        <th scope="col">TA Quota</th>
+                        <th scope="col">Edit TAs</th>
+                    </tr>
+                </thead>
+                <tbody class="container">
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <%= ta.TA_name %>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <%= ta.TA_name %>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <%= ta.TA_name %>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <%= ta.TA_name %>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <%= ta.TA_name %>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tbody class="container"></tbody>
+            </table>
+        </div>
+    </body>
+
+</html>
