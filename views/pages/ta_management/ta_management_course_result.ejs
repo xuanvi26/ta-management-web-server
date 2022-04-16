@@ -1,7 +1,28 @@
 <html>
+    <script>
+        function passCourseName(input_url){
+            var courseName = "<%= course %>";
+            var params = new URLSearchParams();
+            params.append("courseKey", courseName);
+            var url= input_url + "?" + params.toString();
+            location.href=url;
+        }
+        //function that displays things differently between a prof and a ta
+        function displayForUser(){
+            var utype = "<%= userTypes %>".toString();
+            if(utype == "ta,student"){ 
+                //do nothing
+            }
+            else{
+                document.getElementById("only-prof").style.display="block";
+                document.getElementById("only-prof2").style.display="block";
+                document.getElementById("only-prof3").style.display="block";
+            }
+        }
+    </script>
     <% var successMsg; var errorMsg; %>
     <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
-    <body>
+    <body onload="displayForUser()">
         <main role="main">
 			<section class="jumbotron text-center">
 				<div class="container">
@@ -44,7 +65,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="card mb-4 shadow-sm">
-                                        <a href="/ta-management/office-hours-and-responsibilities">
+                                        <a onclick = "passCourseName('/ta-management/office-hours-and-responsibilities')">
                                             <img
                                             class="card-img-top"
                                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
@@ -61,16 +82,17 @@
                                         </a>
                                         <div class="card-body">
                                             <p class="card-text">
-                                                <a href="/ta-management/office-hours-and-responsibilities" style="color:#212529">
+                                                <a a onclick = "passCourseName('/ta-management/office-hours-and-responsibilities')" style="color:#212529">
                                                 Define office hours, office location, and duties of a Prof/TA.
                                                 </a>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                
+                                <div class="col-md-4" id="only-prof" style="display: none;">
                                     <div class="card mb-4 shadow-sm">
-                                        <a href="/ta-management/performance-log">
+                                        <a onclick = "passCourseName('/ta-management/performance-log')">
                                             <img
                                             class="card-img-top"
                                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
@@ -87,16 +109,16 @@
                                         </a>
                                         <div class="card-body">
                                             <p class="card-text">
-                                                <a href="/ta-management/performance-log" style="color:#212529">
+                                                <a onclick = "passCourseName('/ta-management/performance-log')" style="color:#212529">
                                                 Write about a TA's performance.
                                                 </a>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="only-prof2" style="display: none;">
                                     <div class="card mb-4 shadow-sm">
-                                        <a href="/ta-management/wish-list">
+                                        <a onclick = "passCourseName('/ta-management/wish-list')">
                                             <img
                                             class="card-img-top"
                                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
@@ -113,16 +135,16 @@
                                         </a>
                                         <div class="card-body">
                                             <p class="card-text">
-                                                <a href="/ta-management/wish-list" style="color:#212529">
+                                                <a onclick = "passCourseName('/ta-management/wish-list')" style="color:#212529">
                                                 Make a TA wish list.
                                                 </a>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="only-prof3" style="display: none;">
                                     <div class="card mb-4 shadow-sm">
-                                        <a href="/ta-management/all-tas-report">
+                                        <a onclick = "passCourseName('/ta-management/all-tas-report')">
                                             <img
                                             class="card-img-top"
                                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
@@ -139,13 +161,13 @@
                                         </a>
                                         <div class="card-body">
                                             <p class="card-text">
-                                                <a href="/ta-management/all-tas-report" style="color:#212529">
+                                                <a onclick = "passCourseName('/ta-management/all-tas-report')" style="color:#212529">
                                                 Get all TAs' reports.
                                                 </a>
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="col-md-4">
                                     <div class="card mb-4 shadow-sm">
                                         <a href="/ta-management/course-search">

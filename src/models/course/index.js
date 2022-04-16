@@ -8,6 +8,8 @@ const fs = require("fs");
 
 const COURSE_TABLE = "./src/models/course/course.json";
 const COURSE_TABLE_TMP = "./src/models/course/course.json.tmp";
+const OH_TABLE = "./src/models/course/office_hours.json";
+const TA_TABLE = "./src/models/ta/temp_ta_by_course.json"; //IF CHANGE THIS TABLE, go back to services/course.js and make sure key matches
 
 async function getCourseWithName(searchTerms) {
     const courses = reader.fileAsyncIterator(COURSE_TABLE);
@@ -29,6 +31,45 @@ async function getCourseWithName(searchTerms) {
     return matchedCourses;
   }
 
+async function getTAWithCourse(courseString){
+  const allTAs = reader.fileAsyncIterator(TA_TABLE);
+  const matchedTAs = [];
+  for await (const rawTA of allTAs) {
+    try {
+      let someTA = JSON.parse(rawTA);
+      if (
+        Object.entries(courseString).every(([key,value]) => {
+          return someTA[key] === value;
+        })
+      ) {
+        matchedTAs.push(someTA);
+      }
+    } catch (error) {
+      logger.error({ error, ctx: "db.core.account" });
+    }
+  }
+  return matchedTAs;
+}
+
+async function writeToTable(
+  jsonInput,
+  someTable,
+){
+  let error;
+  try{
+    await writer.writeLineToFile(
+      JSON.stringify(jsonInput),
+      someTable
+    );
+  } catch (error){
+    logger.error({ error, ctx: "db.core.account" });
+    error = { details: [{ message: error.message }] };
+  }
+  return { error };
+}
+
 module.exports = {
     getCourseWithName,
+    writeToTable,
+    getTAWithCourse,
 }

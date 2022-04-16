@@ -4,6 +4,7 @@ const reader = require.main.require('./src/utils/reader');
 const TA_TABLE = './src/models/ta/db.json';
 const COURSE_TABLE = './src/models/ta/db2.json';
 const TA_TABLE_TMP = './src/models/ta/db.json.tmp';
+const TA_RATING_TABLE = './src/models/ta/ta_rating.json';
 
 async function addTa(ta, options = { table: TA_TABLE }) {
     (ta = JSON.stringify(ta)), await writer.writeLineToFile(ta, TA_TABLE);
@@ -69,10 +70,29 @@ async function getCourseWithName(searchTerms) {
     return matchedCourses;
 }
 
+async function writeTARating(
+  TAjson,
+  option = {table: TA_RATING_TABLE},
+){
+  let error;
+  try{
+    await writer.writeLineToFile(
+      JSON.stringify(TAjson),
+      option.table
+    );
+  } catch (error){
+    logger.error({ error, ctx: "db.core.account" });
+    error = { details: [{ message: error.message }] };
+  }
+  return { error };
+}
+
+
 module.exports = {
     addTa,
     addCourse,
     deleteTa,
     getCourseWithName,
     getAllTas,
+    writeTARating,
 };
