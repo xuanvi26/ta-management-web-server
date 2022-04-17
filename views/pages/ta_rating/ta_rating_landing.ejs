@@ -1,5 +1,6 @@
 <html>
-    <% var errors %>
+
+    <% var successMsg; var errors %>
     <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
     <body>
         <main role="main">
@@ -7,10 +8,46 @@
 				<div class="container">
 					<h1 class="jumbotron-heading">Rate a TA</h1>
 			</section>
+            <% if(successMsg) { %>
+                <div
+                    class="alert alert-success alert-dismissible fade show container"
+                    role="alert"
+                >
+                    <strong>Success!</strong><%= ` ${successMsg}` %>
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="alert"
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <% } %>
             <form
                 class="container single-page-form-container border border-primary rounded"
-                action="ta-rating/add-ta-rating"
+                action="/ta-rating/add-ta-rating"
                 method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="TAfirstName">TA First Name</label>
+                        <input
+                            class="form-control"
+                            id="TAfirstName"
+                            placeholder="TA first name (required)"
+                            name="TAfirstName"
+                        />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="TAlastName">TA Last Name</label>
+                        <input
+                            class="form-control"
+                            id="TAlastName"
+                            placeholder="TA last name (required)"
+                            name="TAlastName"
+                        />
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="courseName">Course Name</label>
@@ -18,7 +55,7 @@
                             class="form-control"
                             id="courseName"
                             placeholder="Course name (required, e.g.:COMP 307)"
-                            name="someCourseName"
+                            name="courseName"
                         />
                     </div>
                     <div class="form-group col-md-6">
@@ -27,7 +64,7 @@
                             class="form-control"
                             id="courseTY"
                             placeholder="Term and year (required, e.g.: Winter 2022)"
-                            name="someCourseTY"
+                            name="CourseTY"
                         />
                     </div>
                 </div>
@@ -48,7 +85,7 @@
                             class="form-control"
                             id="comment"
                             placeholder="Leave a comment (optional)"
-                            name="someComment"
+                            name="comment"
                         />
                     </div>
                 </div>
@@ -64,7 +101,7 @@
                         class="alert alert-danger alert-dismissible fade show"
                         role="alert"
                     >
-                        <strong>Invalid Registration: </strong><%= errors[0] %>. Please
+                        <strong>Invalid: </strong><%= errors[0] %>. Please
                         try again.
                         <button
                             type="button"

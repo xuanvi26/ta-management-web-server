@@ -1,19 +1,29 @@
 <html>
     <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
     <% var errors; %>
+    <script>
+        function validateForm(){
+            var someInput = document.form.firstName.value;
+            if(someInput == '' || someInput == null){
+                alert("Please fill out required fields.");
+                return false;
+            }
+        }
+    </script>
     <body>
         <div class="main-body-container">
             <h3 class="text-center">Define office hours, office locations, and duties.</h3>
             <form 
                 class="container single-page-form-container border border-primary rounded"
-                action="ta-management/add-office-hours-and-responsibilities"
+                action="/ta-management/add-office-hours-and-responsibilities"
+                name="OHform"
                 method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputFirstName">First name</label>
                         <input
                             class="form-control"
-                            id="inputFirstNameTAM"
+                            id="inputFirstName"
                             placeholder="First name (required)"
                             name="firstName"
                         />
@@ -80,19 +90,20 @@
 						/>
 					</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">
-                            Submit
-                        </button>
-                    </div>
+                <div style="display: none;">
+                    <input 
+                        class="form-control"
+                        id="courseName"
+                        value="<%= course %>"
+                        name="courseName"
+                    />
                 </div>
                 <% if(errors && errors[0]) { %>
                     <div
                         class="alert alert-danger alert-dismissible fade show"
                         role="alert"
                     >
-                        <strong>Invalid Registration: </strong><%= errors[0] %>. Please
+                        <strong>Invalid: </strong><%= errors[0] %>. Please
                         try again.
                         <button
                             type="button"
@@ -104,6 +115,13 @@
                         </button>
                     </div>
                     <% } %>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </body>
