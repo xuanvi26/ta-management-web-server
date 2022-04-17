@@ -1,10 +1,9 @@
 <html>
-    <%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+    <%- include('../../partials/authenticated_navbar.ejs') %>
 	<% var errors; %>
 	<body>
         <div class="main-body-container">
             <h3 class="text-center">Add a course</h3>
-            <h4 class="text-center">Note: duplicate courses are ignored</h4>
             <form
 				class="container single-page-form-container border border-primary rounded"
 				action="/sysop-tasks/add-course"

@@ -1,17 +1,10 @@
 <html>
 	<% var username; %> 
+	<!-- A username will be passed in if the a user is logged in and authenticated -->
 	<% if(username === undefined) { %> 
-		<%- include('../../partials/default_header.ejs') %> 
-	<% } else if(userTypes.includes('sysop')) { %>
-		<%- include('../../partials/dashboard/sysop_dashboard.ejs') %> 
-	<% } else if(userTypes.includes('admin')) { %> 
-		<%- include('../../partials/dashboard/admin_dashboard.ejs') %> 
-	<% } else if(userTypes.includes('prof')) { %> 
-		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
-	<% } else if(userTypes.includes('ta')) { %> 
-		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
-	<% } else if(userTypes.includes('student')) { %> 
-		<%- include('../../partials/dashboard/student_dashboard.ejs') %> 
+		<%- include('../../partials/unauthenticated_navbar.ejs') %> 
+	<% } else { %>
+		<%- include('../../partials/authenticated_navbar.ejs') %> 
 	<% } %>
 	<body>
 		<main role="main">

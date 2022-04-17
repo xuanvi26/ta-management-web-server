@@ -1,5 +1,5 @@
 <html>
-	<%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+	<%- include('../../partials/authenticated_navbar.ejs') %>
     <script>
         function handleEditUser(username) {
             window.location.href = `/account?username=${username}`;

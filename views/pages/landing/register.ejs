@@ -1,4 +1,5 @@
 <html>
+    <%- include('../../partials/unauthenticated_navbar.ejs') %>
     <!-- A script that ensures that the user types selected are coherent -->
     <script>
         function uncheckProfAdminSysop() {
@@ -55,7 +56,6 @@
             }
         }
     </script>
-    <%- include('../../partials/default_header.ejs') %>
     <% var errors; %>
 	<body>
         <div class="main-body-container">
