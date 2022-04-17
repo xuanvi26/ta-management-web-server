@@ -102,7 +102,7 @@ async function getUserWithAnyKeys(searchTerms) {
   return false;
 }
 
-// Edits a user in the database (param includes a full user, i.e., 
+// Edits a user in the database (param includes a full user, i.e.,
 // the function overrides the user in question)
 async function editUser(inputUser) {
   const users = reader.fileAsyncIterator(ACCOUNT_TABLE);

@@ -1,4 +1,4 @@
-// Valides user type matches params, otherwise returns 404 and redirects to 
+// Valides user type matches params, otherwise returns 404 and redirects to
 // home if logged in and login if not logged in
 const checkAuthenticationWithUserType = (paramUserTypes, cb) => {
   return (req, res, ...params) => {

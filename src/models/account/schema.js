@@ -1,4 +1,4 @@
-// This file contains the schema of the user account database 
+// This file contains the schema of the user account database
 
 const Joi = require("joi");
 
