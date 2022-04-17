@@ -1,4 +1,5 @@
 # ta-management-web-server
+
 Seeded users (username, password)
 student, student
 ta, student

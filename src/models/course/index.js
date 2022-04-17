@@ -10,34 +10,34 @@ const CP_TABLE = "./src/models/course/courses_and_profs.json";
 
 //iterates through course table and finds a course that matches the search term
 async function getCourseWithName(searchTerms) {
-    const courses = reader.fileAsyncIterator(CP_TABLE);
-    const matchedCourses = [];
-    for await (const rawCourse of courses) {
-      try {
-        let course = JSON.parse(rawCourse);
-        if (
-          Object.entries(searchTerms).every(([key, value]) => {
-            return course[key] === value;
-          })
-        ) {
-          matchedCourses.push(course);
-        }
-      } catch (error) {
-        logger.error({ error, ctx: "db.core.account" });
+  const courses = reader.fileAsyncIterator(CP_TABLE);
+  const matchedCourses = [];
+  for await (const rawCourse of courses) {
+    try {
+      let course = JSON.parse(rawCourse);
+      if (
+        Object.entries(searchTerms).every(([key, value]) => {
+          return course[key] === value;
+        })
+      ) {
+        matchedCourses.push(course);
       }
+    } catch (error) {
+      logger.error({ error, ctx: "db.core.account" });
     }
-    return matchedCourses;
   }
+  return matchedCourses;
+}
 
-  //iterates through the TA table and finds all TAs that matches the search term
-async function getTAWithCourse(courseString){
+//iterates through the TA table and finds all TAs that matches the search term
+async function getTAWithCourse(courseString) {
   const allTAs = reader.fileAsyncIterator(TA_TABLE);
   const matchedTAs = [];
   for await (const rawTA of allTAs) {
     try {
       let someTA = JSON.parse(rawTA);
       if (
-        Object.entries(courseString).every(([key,value]) => {
+        Object.entries(courseString).every(([key, value]) => {
           return someTA[key] === value;
         })
       ) {
@@ -51,17 +51,11 @@ async function getTAWithCourse(courseString){
 }
 
 //function that writes to the table
-async function writeToTable(
-  jsonInput,
-  someTable,
-){
+async function writeToTable(jsonInput, someTable) {
   let error;
-  try{
-    await writer.writeLineToFile(
-      JSON.stringify(jsonInput),
-      someTable
-    );
-  } catch (error){
+  try {
+    await writer.writeLineToFile(JSON.stringify(jsonInput), someTable);
+  } catch (error) {
     logger.error({ error, ctx: "db.core.account" });
     error = { details: [{ message: error.message }] };
   }
@@ -69,7 +63,7 @@ async function writeToTable(
 }
 
 module.exports = {
-    getCourseWithName,
-    writeToTable,
-    getTAWithCourse,
-}
+  getCourseWithName,
+  writeToTable,
+  getTAWithCourse,
+};
