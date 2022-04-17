@@ -18,12 +18,12 @@
 
         <div style="margin: 10%;">
             <p>Please select the Course</p>
-            <form action="/ta-administration/taInfo/result">
+            <form action="/ta-administration/courseInfo/result">
 
 
-                <select name="TA" id="TA">
+                <select name="COURSE" id="COURSE">
                 <% for(let course of courses) { %>
-                    <option value="<%= course.course_name %>"><%= course.course_name %> </option>
+                    <option value="<%= course.course_num %>"><%= course.course_num %> </option>
                 <% } %>
 
             </select>

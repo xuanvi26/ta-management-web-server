@@ -51,20 +51,36 @@ router.post(
         const { TA } = req.body;
         const { COURSE } = req.body;
         await model.addTaToCourse(TA, COURSE);
-        res.render('pages/ta_administration/success.ejs');
+        const tas = await model.getAllTas();
+        const courses = await model.getAllCourses();
+        const registered = await model.getAllRegisteredEntities();
+        res.render('pages/ta_administration/edit.ejs', {
+            tas,
+            courses,
+            registered,
+        });
     })
 );
 router.post(
     '/removeTA',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
-
         const { TA } = req.body;
         const myArray = TA.trim().split('%');
         const ta = myArray[0];
         const course = myArray[1];
 
         await model.removeTaFromCourse(ta, course);
-        res.render('pages/ta_administration/success.ejs');
+
+        const tas = await model.getAllTas();
+        const courses = await model.getAllCourses();
+        const registered = await model.getAllRegisteredEntities();
+        console.log(registered);
+        res.render('pages/ta_administration/edit.ejs', {
+            tas,
+            courses,
+            registered,
+        });
+        // res.render('pages/ta_administration/orangeMenu.ejs');
     })
 );
 router.get(
@@ -78,12 +94,30 @@ router.get(
         const comments = await model.getStudentComments(ta);
         const wishList = await model.getWishList(ta);
         ta.rating = rating;
-        console.log(wishList);
+        const allregistered = await model.getAllRegisteredEntities();
+        const registered = allregistered.filter((r) => r.TA_name.trim() === ta.TA_name.trim());
+
         res.render('pages/ta_administration/ta_result.ejs', {
             ta,
             performances,
             comments,
             wishList,
+            registered
+        });
+    })
+);
+router.get(
+    '/courseInfo/result',
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const COURSE = req.query.COURSE.trim();
+        // console.log(course);
+        const courses = await model.getAllCourses();
+        const course = courses.find((c) => c.course_num.trim() === COURSE);
+        const allregistered = await model.getAllRegisteredEntities();
+        const registered = allregistered.filter((r) => r.courseName.trim() === course.course_name.trim());
+        res.render('pages/ta_administration/courseResult.ejs', {
+            course,
+            registered
         });
     })
 );
