@@ -11,30 +11,35 @@ const { addTa } = require.main.require('./src/services/admin');
 const { addCourse } = require.main.require('./src/services/admin');
 const { findTa, deleteTa } = require.main.require('./src/services/admin');
 const { findCourse } = require.main.require('./src/services/course');
-const { response_type } = require.main.require('./src/response');
 const model = require.main.require('./src/models/ta');
 // EXAMPLE OF A GET
 router.get(
     '/',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/orangeMenu.ejs');
+        res.render('pages/ta_administration/orangeMenu.ejs', {
+            userTypes: req.session.user.userTypes,
+            username: req.session.user.username,
+          });
     })
 );
 
 router.get(
     '/import',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/import.ejs');
+        res.render('pages/ta_administration/import.ejs', {
+            userTypes: req.session.user.userTypes,
+            username: req.session.user.username,
+          });
     })
 );
 
 router.get(
     '/import_courses',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/import_courses.ejs');
+        res.render('pages/ta_administration/import_courses.ejs', {
+            userTypes: req.session.user.userTypes,
+            username: req.session.user.username,
+          });
     })
 );
 
@@ -42,7 +47,11 @@ router.get(
     '/taInfo',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
         const tas = await model.getAllTas();
-        res.render('pages/ta_administration/taInfo.ejs', { tas });
+        res.render('pages/ta_administration/taInfo.ejs', { 
+            tas, 
+            userTypes: req.session.user.userTypes,
+            username: req.session.user.username,
+          });
     })
 );
 router.post(
@@ -58,6 +67,8 @@ router.post(
             tas,
             courses,
             registered,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
         });
     })
 );
@@ -79,15 +90,15 @@ router.post(
             tas,
             courses,
             registered,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
         });
-        // res.render('pages/ta_administration/orangeMenu.ejs');
     })
 );
 router.get(
     '/taInfo/result',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
         const tas = await model.getAllTas();
-        // console.log(tas)
         const ta = tas.find((t) => t.TA_name.trim() === req.query.TA.trim());
         const rating = await model.getTaRatingAverage(ta);
         const performances = await model.getPerformance(ta);
@@ -102,7 +113,9 @@ router.get(
             performances,
             comments,
             wishList,
-            registered
+            registered,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
         });
     })
 );
@@ -110,14 +123,15 @@ router.get(
     '/courseInfo/result',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
         const COURSE = req.query.COURSE.trim();
-        // console.log(course);
         const courses = await model.getAllCourses();
         const course = courses.find((c) => c.course_num.trim() === COURSE);
         const allregistered = await model.getAllRegisteredEntities();
         const registered = allregistered.filter((r) => r.courseName.trim() === course.course_name.trim());
         res.render('pages/ta_administration/courseResult.ejs', {
             course,
-            registered
+            registered,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
         });
     })
 );
@@ -126,7 +140,11 @@ router.get(
     '/courseInfo',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
         const courses = await model.getAllCourses();
-        res.render('pages/ta_administration/courseInfo.ejs', { courses });
+        res.render('pages/ta_administration/courseInfo.ejs', { 
+            courses,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
+        });
     })
 );
 
@@ -136,11 +154,12 @@ router.get(
         const tas = await model.getAllTas();
         const courses = await model.getAllCourses();
         const registered = await model.getAllRegisteredEntities();
-        console.log(registered);
         res.render('pages/ta_administration/edit.ejs', {
             tas,
             courses,
             registered,
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
         });
     })
 );
@@ -175,16 +194,14 @@ router.get(
 );
 
 // EXAMPLE OF A POST
-router.post('/hello', async(req, res) => {
+router.post('/tas/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         const filepath = files.filename.filepath;
-        console.log(filepath);
         var csvData = [];
         fs.createReadStream(filepath)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function(csvrow) {
-                // console.log(csvrow)
                 const ta = {
                     term_month_year: csvrow[0],
                     TA_name: csvrow[1],
@@ -203,31 +220,25 @@ router.post('/hello', async(req, res) => {
                     open_to_other_courses: csvrow[14],
                     notes: csvrow[15],
                 };
-                // console.log(ta);
                 addTa(ta);
-                //do something with csvrow
-                // csvData.push(csvrow);
             })
             .on('end', function() {
-                // console.log(csvData);
             });
     });
-    // res.status(404).json('HELLOOOO');
-    res.render('pages/ta_administration/orangeMenu.ejs');
-    // process.stdout.write("Hello World\n");
+    res.render('pages/ta_administration/orangeMenu.ejs', {
+        userTypes: req.session.user.userTypes,
+        username: req.session.user.username,
+      });
 });
 
-// EXAMPLE OF A POST
-router.post('/hello_courses', async(req, res) => {
+router.post('/courses/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         const filepath = files.filename.filepath;
-        console.log(filepath);
         var csvData = [];
         fs.createReadStream(filepath)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function(csvrow) {
-                // console.log(csvrow)
                 const course = {
                     term_month_year: csvrow[0],
                     course_num: csvrow[1],
@@ -237,17 +248,15 @@ router.post('/hello_courses', async(req, res) => {
                     course_enrollment_num: csvrow[5],
                     TA_quota: csvrow[6],
                 };
-                // console.log(course);
                 addCourse(course);
-                //do something with csvrow
-                // csvData.push(csvrow);
             })
             .on('end', function() {
-                // console.log(csvData);
             });
     });
-    res.render('pages/ta_administration/orangeMenu.ejs');
-    // process.stdout.write("Hello World\n");
+    res.render('pages/ta_administration/orangeMenu.ejs', {
+        userTypes: req.session.user.userTypes,
+        username: req.session.user.username,
+      });
 });
 
 module.exports = router;

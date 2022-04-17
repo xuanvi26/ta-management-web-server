@@ -5,14 +5,11 @@ const { checkAuthenticationWithUserType } = require.main.require(
   "./src/utils/authentication"
 );
 const {
-  registerUser,
   handleSysopUserRegistration,
   handleUnauthenticatedUserRegistration,
   findUsers,
   deleteUser,
 } = require.main.require("./src/services/account");
-const { response_type } = require.main.require("./src/response");
-const schema = require.main.require("./src/models/account/schema");
 const model = require.main.require("./src/models/account");
 
 // GET register page

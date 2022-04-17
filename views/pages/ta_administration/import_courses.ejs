@@ -1,13 +1,7 @@
 <!DOCTYPE html>
   
 <html>
-    <%- include("../../partials/dashboard/admin_dashboard.ejs") %> 
-    <head>
-        <title>
-              
-        </title>
-    </head>
-      
+    <%- include('../../partials/authenticated_navbar.ejs') %>      
     <body>
 
         <section class="jumbotron text-center">
@@ -17,7 +11,7 @@
         </section>
 
 
-        <form action="/ta-administration/hello_courses" method="POST" enctype="multipart/form-data" style="margin: 10%;">
+        <form action="/ta-administration/courses/import" method="POST" enctype="multipart/form-data" style="margin: 10%;">
             <!-- <h1>Import a TA</h1> -->
             <p>Please select a file to upload</p>   
             <input type="file" accept=".csv" id="myFile" name="filename">
