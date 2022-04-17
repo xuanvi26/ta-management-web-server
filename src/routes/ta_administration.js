@@ -9,9 +9,10 @@ const { checkAuthenticationWithUserType } = require.main.require(
 const fs = require('fs');
 const { addTa } = require.main.require('./src/services/admin');
 const { addCourse } = require.main.require('./src/services/admin');
-const {findTa,deleteTa} = require.main.require("./src/services/admin");
-const {findCourse} = require.main.require("./src/services/course");
-const { response_type } = require.main.require("./src/response");
+const { findTa, deleteTa } = require.main.require('./src/services/admin');
+const { findCourse } = require.main.require('./src/services/course');
+const { response_type } = require.main.require('./src/response');
+const model = require.main.require('./src/models/ta');
 // EXAMPLE OF A GET
 router.get(
     '/',
@@ -39,121 +40,105 @@ router.get(
 
 router.get(
     '/taInfo',
-    checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/taInfo.ejs');
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const tas = await model.getAllTas();
+        res.render('pages/ta_administration/taInfo.ejs', { tas });
+    })
+);
+router.post(
+    '/addTA',
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const { TA } = req.body;
+        const { COURSE } = req.body;
+        await model.addTaToCourse(TA, COURSE);
+        res.render('pages/ta_administration/success.ejs');
+    })
+);
+router.post(
+    '/removeTA',
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+
+        const { TA } = req.body;
+        const myArray = TA.trim().split('%');
+        const ta = myArray[0];
+        const course = myArray[1];
+
+        await model.removeTaFromCourse(ta, course);
+        res.render('pages/ta_administration/success.ejs');
+    })
+);
+router.get(
+    '/taInfo/result',
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const tas = await model.getAllTas();
+        // console.log(tas)
+        const ta = tas.find((t) => t.TA_name.trim() === req.query.TA.trim());
+        const rating = await model.getTaRatingAverage(ta);
+        const performances = await model.getPerformance(ta);
+        const comments = await model.getStudentComments(ta);
+        const wishList = await model.getWishList(ta);
+        ta.rating = rating;
+        console.log(wishList);
+        res.render('pages/ta_administration/ta_result.ejs', {
+            ta,
+            performances,
+            comments,
+            wishList,
+        });
     })
 );
 
 router.get(
     '/courseInfo',
-    checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/courseInfo.ejs');
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const courses = await model.getAllCourses();
+        res.render('pages/ta_administration/courseInfo.ejs', { courses });
     })
 );
 
 router.get(
     '/edit',
-    checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
-        // res.status(404).json("Not implemented ta administration");
-        res.render('pages/ta_administration/edit.ejs');
+    checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
+        const tas = await model.getAllTas();
+        const courses = await model.getAllCourses();
+        const registered = await model.getAllRegisteredEntities();
+        console.log(registered);
+        res.render('pages/ta_administration/edit.ejs', {
+            tas,
+            courses,
+            registered,
+        });
     })
 );
 
+router.get(
+    '/courses',
+    checkAuthenticationWithUserType(['ta', 'prof'], async(req, res) => {
+        if (!req.query.course_name_search) {
+            res.render('pages/ta_administration/edit.ejs', {
+                userTypes: req.session.user.userTypes,
+                username: req.session.user.username,
+                error: 'Please enter a search term.',
+            });
+        } else {
+            const courses = await findCourse(req.query.course_name_search);
 
-
-//   router.get(
-//     "/courses",
-//     checkAuthenticationWithUserType(["sysop","admin"], async (req, res) => {
-//       if (!req.query.course_name_search) { // if no terms
-//         res.render("pages/ta_administration/edit.ejs", {
-//           userTypes: req.session.user.userTypes,
-//           username: req.session.user.username,
-//           error: "Please enter a search term.",
-//         });
-//       } else {
-//         const courses = await findCourse(req.query.course_name_search);
-  
-//         if (courses.length == 0) {
-//           res.render("pages/ta_administration/edit.ejs", {
-//             userTypes: req.session.user.userTypes,
-//             username: req.session.user.username,
-//             error: "No user matched search term.",
-//           });
-//         } else {
-//           res.render("pages/ta_administration/result.ejs", {
-//             userTypes: req.session.user.userTypes,
-//             username: req.session.user.username,
-//             course: courses[0].course_name,
-//           });
-//         }
-//       }
-//     })
-//   );
-
-  router.get(
-    "/courses",
-    checkAuthenticationWithUserType(["ta","prof"], async (req, res) => {
-      if(!req.query.course_name_search){
-        res.render("pages/ta_administration/edit.ejs", {
-          userTypes: req.session.user.userTypes,
-          username: req.session.user.username,
-          error: "Please enter a search term.",
-        });
-      } else{
-        const courses = await findCourse(req.query.course_name_search);
-  
-        if (courses.length === 0){
-          res.render("pages/ta_administration/edit.ejs", {
-            userTypes: req.session.user.userTypes,
-            username: req.session.user.username,
-            error: "No course matched the search term."
-          });
-        } else{
-          res.render("pages/ta_administration/result.ejs", {
-            userTypes: req.session.user.userTypes,
-            username: req.session.user.username,
-            course: courses[0].course_name,
-          });
+            if (courses.length === 0) {
+                res.render('pages/ta_administration/edit.ejs', {
+                    userTypes: req.session.user.userTypes,
+                    username: req.session.user.username,
+                    error: 'No course matched the search term.',
+                });
+            } else {
+                res.render('pages/ta_administration/result.ejs', {
+                    userTypes: req.session.user.userTypes,
+                    username: req.session.user.username,
+                    course: courses[0].course_name,
+                });
+            }
         }
-      } 
     })
-    
-  );
-
-//   router.get(
-//     "/courses",
-//     checkAuthenticationWithUserType(["ta","prof"], async (req, res) => {
-//       if(!req.query.course_name_search){
-//         res.render("pages/ta_management/ta_management_landing.ejs", {
-//           userTypes: req.session.user.userTypes,
-//           username: req.session.user.username,
-//           error: "Please enter a search term.",
-//         });
-//       } else{
-//         const courses = await findCourse(req.query.course_name_search);
-  
-//         if (courses.length === 0){
-//           res.render("pages/ta_management/ta_management_landing.ejs", {
-//             userTypes: req.session.user.userTypes,
-//             username: req.session.user.username,
-//             error: "No course matched the search term."
-//           });
-//         } else{
-//           res.render("pages/ta_management/ta_management_course_result.ejs", {
-//             userTypes: req.session.user.userTypes,
-//             username: req.session.user.username,
-//             course: courses[0].course_name,
-//           });
-//         }
-//       } 
-//     })
-//   );
-
-
-
-
+);
 
 // EXAMPLE OF A POST
 router.post('/hello', async(req, res) => {
@@ -167,22 +152,22 @@ router.post('/hello', async(req, res) => {
             .on('data', function(csvrow) {
                 // console.log(csvrow)
                 const ta = {
-                  term_month_year: csvrow[0],
-                  TA_name: csvrow[1],
-                  student_ID: csvrow[2],
-                  legal_name: csvrow[3],
-                  email: csvrow[4],
-                  grad_ugrad: csvrow[5],
-                  supervisor_name: csvrow[6],
-                  priority: csvrow[7],
-                  hours: csvrow[8],
-                  date_applied: csvrow[9],
-                  location: csvrow[10],
-                  phone: csvrow[11],
-                  degree: csvrow[12],
-                  courses_applied_for: csvrow[13],
-                  open_to_other_courses: csvrow[14],
-                  notes: csvrow[15],
+                    term_month_year: csvrow[0],
+                    TA_name: csvrow[1],
+                    student_ID: csvrow[2],
+                    legal_name: csvrow[3],
+                    email: csvrow[4],
+                    grad_ugrad: csvrow[5],
+                    supervisor_name: csvrow[6],
+                    priority: csvrow[7],
+                    hours: csvrow[8],
+                    date_applied: csvrow[9],
+                    location: csvrow[10],
+                    phone: csvrow[11],
+                    degree: csvrow[12],
+                    courses_applied_for: csvrow[13],
+                    open_to_other_courses: csvrow[14],
+                    notes: csvrow[15],
                 };
                 // console.log(ta);
                 addTa(ta);
@@ -197,8 +182,6 @@ router.post('/hello', async(req, res) => {
     res.render('pages/ta_administration/orangeMenu.ejs');
     // process.stdout.write("Hello World\n");
 });
-
-
 
 // EXAMPLE OF A POST
 router.post('/hello_courses', async(req, res) => {

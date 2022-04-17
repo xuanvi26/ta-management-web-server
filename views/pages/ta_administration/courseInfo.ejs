@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-  
+
 <html>
-    <%- include("../../partials/dashboard/admin_dashboard.ejs") %> 
+<%- include("../../partials/dashboard/admin_dashboard.ejs") %>
+
     <head>
         <title>
-              
+
         </title>
     </head>
-      
+
     <body>
         <section class="jumbotron text-center">
             <div class="container">
@@ -15,18 +16,21 @@
                 <p>Please select the course you are looking for</p>
         </section>
 
-
-        <!-- <h1>View Course Info/History</h1> -->
         <div style="margin: 10%;">
-            <p>Please select the course</p>
-            <select name="TA" id="TA">
-                <option value="a">COMP307</option>
-                <option value="b">NSCI400</option>
-                <option value="c">COMP322</option>
-                <option value="d">COMP421</option>
-            </select>
+            <p>Please select the Course</p>
+            <form action="/ta-administration/taInfo/result">
 
+
+                <select name="TA" id="TA">
+                <% for(let course of courses) { %>
+                    <option value="<%= course.course_name %>"><%= course.course_name %> </option>
+                <% } %>
+
+            </select>
+                <button type="submit" class="btn btn-outline-primary">select</button>
+            </form>
         </div>
-        
+
     </body>
+
 </html>
