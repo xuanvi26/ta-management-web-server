@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//var busboy = require('connect-busboy');
 var { parse } = require('csv-parse');
 var formidable = require('formidable');
 const { checkAuthenticationWithUserType } = require.main.require(
@@ -12,7 +11,7 @@ const { addCourse } = require.main.require('./src/services/admin');
 const { findCourse } = require.main.require('./src/services/course');
 const model = require.main.require('./src/models/ta');
 
-// EXAMPLE OF A GET
+// get the home
 router.get(
     '/',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
@@ -22,7 +21,7 @@ router.get(
           });
     })
 );
-
+// get the import page
 router.get(
     '/import',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
@@ -32,7 +31,7 @@ router.get(
           });
     })
 );
-
+// get the import page for courses
 router.get(
     '/import_courses',
     checkAuthenticationWithUserType(['admin', 'sysop'], (req, res) => {
@@ -42,7 +41,7 @@ router.get(
           });
     })
 );
-
+// get the ta information
 router.get(
     '/taInfo',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -54,6 +53,7 @@ router.get(
           });
     })
 );
+// get to the add ta
 router.post(
     '/addTA',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -72,6 +72,7 @@ router.post(
         });
     })
 );
+// to remove the ta from the db
 router.post(
     '/removeTA',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -94,6 +95,8 @@ router.post(
         });
     })
 );
+
+// the result that it gives
 router.get(
     '/taInfo/result',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -118,6 +121,8 @@ router.get(
         });
     })
 );
+
+// the result that it gives for the course info
 router.get(
     '/courseInfo/result',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -135,6 +140,7 @@ router.get(
     })
 );
 
+// the course information
 router.get(
     '/courseInfo',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -147,6 +153,7 @@ router.get(
     })
 );
 
+// in order to edit the db
 router.get(
     '/edit',
     checkAuthenticationWithUserType(['admin', 'sysop'], async(req, res) => {
@@ -163,6 +170,7 @@ router.get(
     })
 );
 
+// display the courses
 router.get(
     '/courses',
     checkAuthenticationWithUserType(['ta', 'prof'], async(req, res) => {
@@ -192,7 +200,7 @@ router.get(
     })
 );
 
-// EXAMPLE OF A POST
+// function to import
 router.post('/tas/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
@@ -229,6 +237,7 @@ router.post('/tas/import', async(req, res) => {
       });
 });
 
+// same thing as above but for courses
 router.post('/courses/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
