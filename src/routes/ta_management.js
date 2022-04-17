@@ -13,8 +13,8 @@ const { response_type } = require.main.require("./src/response");
 const { writeToTable } = require.main.require("./src/models/course");
 const url = require('url');
 const OH_TABLE = "./src/models/course/office_hours.json";
-const PL_TABLE = "./src/models/course/performance_log.json"
-const WL_TABLE = "./src/models/ta/wish_list.json"
+const PL_TABLE = "./src/models/course/performance_log.json";
+const WL_TABLE = "./src/models/ta/wish_list.json";
 
 
 // LANDING PAGE OF TA_MANAGEMENT
@@ -55,7 +55,7 @@ router.get(
         res.render("pages/ta_management/ta_management_course_search.ejs", {
           userTypes: req.session.user.userTypes,
           username: req.session.user.username,
-          error: "No course matched the search term."
+          error: "No course matched the search term. (Note: The query is case and space sensitive, please respect the format in the example.)"
         });
       } else{
         //sessionStorage.setItem("currentCourse", courses[0].course_name);

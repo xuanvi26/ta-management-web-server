@@ -43,10 +43,21 @@ async function isWLInputValid(input){
     return true;
 }
 
+async function isCPInputValid(input){
+    if (input.course_name == "" ||
+        input.course_num == "" || 
+        input.term_month_year == "" || 
+        input.instructor_assigned_name == ""
+    ){
+      return false;
+    }
+    return true;
+}
 
 module.exports = {
     findCourse,
     findTA,
     isOHInputValid,
     isWLInputValid,
+    isCPInputValid,
 };

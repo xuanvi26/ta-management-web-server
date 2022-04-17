@@ -1,15 +1,14 @@
 <html>
-    <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
+    <% if(userTypes.includes('sysop')) { %>
+		<%- include('../../partials/dashboard/sysop_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('admin')) { %> 
+		<%- include('../../partials/dashboard/admin_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('prof')) { %> 
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('ta')) { %> 
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
+    <% } %>
     <% var errors; %>
-    <script>
-        function validateForm(){
-            var someInput = document.form.firstName.value;
-            if(someInput == '' || someInput == null){
-                alert("Please fill out required fields.");
-                return false;
-            }
-        }
-    </script>
     <body>
         <div class="main-body-container">
             <h3 class="text-center">Define office hours, office locations, and duties.</h3>

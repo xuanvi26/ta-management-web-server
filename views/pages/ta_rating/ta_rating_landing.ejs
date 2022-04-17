@@ -1,7 +1,16 @@
 <html>
-
     <% var successMsg; var errors %>
-    <%- include("../../partials/dashboard/ta&prof_dashboard.ejs") %>
+    <% if(userTypes.includes('sysop')) { %>
+		<%- include('../../partials/dashboard/sysop_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('admin')) { %> 
+		<%- include('../../partials/dashboard/admin_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('prof')) { %> 
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('ta')) { %> 
+		<%- include('../../partials/dashboard/ta&prof_dashboard.ejs') %> 
+	<% } else if(userTypes.includes('student')) { %> 
+		<%- include('../../partials/dashboard/student_dashboard.ejs') %> 
+	<% } %>
     <body>
         <main role="main">
             <section class="jumbotron text-center">
