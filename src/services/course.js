@@ -1,21 +1,24 @@
 const model = require.main.require("./src/models/course");
 const schema = require.main.require("./src/models/course/schema");
+const CP_TABLE = "./src/models/course/courses_and_profs.json";
 
+//finds a course in the database, calls the getCourseWithName function that is in index.js in the src/models/course folder
 async function findCourse(searchString){
-    let keys = schema.keys;
     const courses = await model.getCourseWithName({
-        course_name: searchString,
+        course_num: searchString,
     });
     return courses;
 }
 
+//finds a TA in a specific course, calls getTAWithCourse function that is in index.js in the src/models/course folder
 async function findTA(courseString){
     const TAs = await model.getTAWithCourse({
-        CourseName: courseString,
+        courseName: courseString,
     })
     return TAs;
 }
 
+//validates the input of the office hours form for ta management
 async function isOHInputValid(input){
     if (input.firstName == "" ||
         input.lastName == "" || 
@@ -30,6 +33,7 @@ async function isOHInputValid(input){
     return true;
 }
 
+//validates the input of the wish list form for ta management
 async function isWLInputValid(input){
     if (input.termMonthYear == "" ||
         input.courseNum == "" || 
@@ -43,6 +47,7 @@ async function isWLInputValid(input){
     return true;
 }
 
+//validates the input of the courses and profs form for sysop
 async function isCPInputValid(input){
     if (input.course_name == "" ||
         input.course_num == "" || 

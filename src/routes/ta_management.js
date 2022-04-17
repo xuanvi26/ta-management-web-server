@@ -19,7 +19,6 @@ const WL_TABLE = "./src/models/ta/wish_list.json";
 
 // LANDING PAGE OF TA_MANAGEMENT
 router.get("/", checkAuthenticationWithUserType(["ta","prof"],(req, res) => {
-  //res.status(404).json("Not implemented ta_management");
   res.render("pages/ta_management/ta_management_landing.ejs", {
     userTypes: req.session.user.userTypes,
     username: req.session.user.username,
@@ -62,7 +61,7 @@ router.get(
         res.render("pages/ta_management/ta_management_course_result.ejs", {
           userTypes: req.session.user.userTypes,
           username: req.session.user.username,
-          course: courses[0].course_name,
+          course: courses[0].course_num,
         });
       }
     } 
@@ -127,7 +126,9 @@ router.get(
   checkAuthenticationWithUserType(["ta","prof"], async (req, res) => {
     const queryObject = url.parse(req.url, true).query;
     const courseName = queryObject["courseKey"];
-    const TAmatch = await findTA(courseName);
+    const someCourse = await findCourse(courseName);
+    console.log(someCourse[0]);
+    const TAmatch = await findTA(someCourse[0].course_name);
     if (TAmatch.length === 0){
       res.render("pages/ta_management/ta_management_course_result.ejs", {
         userTypes: req.session.user.userTypes,
@@ -224,33 +225,6 @@ router.post(
         });
       }
     }
-  })
-);
-
-//ALL TAS REPORT
-router.get(
-  "/all-tas-report",
-  checkAuthenticationWithUserType(["ta","prof"], async (req, res) => {
-    const queryObject = url.parse(req.url, true).query;
-    const courseName = queryObject["courseKey"];
-    res.render("pages/ta_management/ta_management_all_report.ejs", {
-      userTypes: req.session.user.userTypes,
-      username: req.session.user.username,
-      course: courseName,
-    });
-  })
-);
-
-//POST REQUEST for all TAs report
-router.post(
-  "/back-from-all-tas",
-  checkAuthenticationWithUserType(["ta","prof"], async (req,res) => {
-    const courseName = req.body.courseName;
-    res.render("pages/ta_management/ta_management_course_result.ejs", {
-      userTypes: req.session.user.userTypes,
-      username: req.session.user.username,
-      course: courseName,
-    });
   })
 );
 

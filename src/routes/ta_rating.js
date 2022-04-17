@@ -7,6 +7,7 @@ const { checkAuthentication, checkAuthenticationWithUserType } = require.main.re
 const { response_type } = require.main.require("./src/response");
 const { writeTARating } = require.main.require("./src/models/ta");
 
+//function that verifies if the input of the TA rating form is valid
 function isInputValid(input){
   if(input.TAfirstName == "" ||
       input.TAlastName == "" ||
@@ -22,7 +23,6 @@ function isInputValid(input){
 
 // LANDING PAGE OF TA RATING
 router.get("/", checkAuthenticationWithUserType(["student","ta","prof","admin","sysop"],(req, res) => {
-  //res.status(404).json("Not implemented ta_management");
   res.render("pages/ta_rating/ta_rating_landing.ejs", {
     userTypes: req.session.user.userTypes,
     username: req.session.user.username,
@@ -54,7 +54,6 @@ router.post(
           });
           return;
         } else{
-          // "pages/landing/home.ejs"
           res.render("pages/ta_rating/ta_rating_landing.ejs", {
             successMsg: `Rating for ${req.body.TAfirstName} ${req.body.TAlastName} succesfully added.`,
             errors: [],

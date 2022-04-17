@@ -27,7 +27,7 @@
                             name="taName">
                             <% for(let TA of TAmatch) { %> 
                             <% var fullName = TA.TAFName + " " + TA.TALName %>
-                            <option value= '<%=`${fullName}`%>' ><%= fullName %></option>
+                            <option value= '<%=`${TA.TA_name}`%>' ><%= TA.TA_name %></option>
                             <% } %>
                         </select>
                     </div>
