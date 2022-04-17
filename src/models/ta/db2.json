@@ -1,4 +1,2 @@
-{"term_month_year":"winter2020","course_num":"comp202","course_type":"french","course_name":"intro to comp","instructor_name":"dr arjun","course_enrollment_num":"12345","TA_quota":"5"}
-{"term_month_year":"winter2020","course_num":"comp222","course_type":"french","course_name":"intro to comp","instructor_name":"dr arjun","course_enrollment_num":"12345","TA_quota":"5"}
-{"term_month_year":"winter2020","course_num":"comp205","course_type":"french","course_name":"intro to comp","instructor_name":"dr arjun","course_enrollment_num":"12345","TA_quota":"5"}
-{"term_month_year":"winter2020","course_num":"comp210","course_type":"french","course_name":"intro to comp","instructor_name":"dr arjun","course_enrollment_num":"12345","TA_quota":"5"}
+{"term_month_year":"Winter 2020","course_num":"COMP 202","course_type":"CS course","course_name":"Intro to CS","instructor_name":"dr arjun","course_enrollment_num":"12345","TA_quota":"5"}
+{"term_month_year":"Winter 2022","course_num":"COMP 307","course_type":"CS course","course_name":"Web Development","instructor_name":"Joseph Vybihal","course_enrollment_num":"12345","TA_quota":"5"}
