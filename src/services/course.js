@@ -1,6 +1,4 @@
 const model = require.main.require("./src/models/course");
-const schema = require.main.require("./src/models/course/schema");
-const CP_TABLE = "./src/models/course/courses_and_profs.json";
 
 //finds a course in the database, calls the getCourseWithName function that is in index.js in the src/models/course folder
 async function findCourse(searchString){

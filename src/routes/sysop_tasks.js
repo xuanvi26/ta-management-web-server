@@ -106,7 +106,6 @@ router.post(
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         const filepath = files.courseFile.filepath;
-        console.log(filepath);
         fs.createReadStream(filepath)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function(csvrow) {
