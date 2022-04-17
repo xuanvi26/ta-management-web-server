@@ -9,9 +9,9 @@ const { checkAuthenticationWithUserType } = require.main.require(
 const fs = require('fs');
 const { addTa } = require.main.require('./src/services/admin');
 const { addCourse } = require.main.require('./src/services/admin');
-const { findTa, deleteTa } = require.main.require('./src/services/admin');
 const { findCourse } = require.main.require('./src/services/course');
 const model = require.main.require('./src/models/ta');
+
 // EXAMPLE OF A GET
 router.get(
     '/',
@@ -85,7 +85,6 @@ router.post(
         const tas = await model.getAllTas();
         const courses = await model.getAllCourses();
         const registered = await model.getAllRegisteredEntities();
-        console.log(registered);
         res.render('pages/ta_administration/edit.ejs', {
             tas,
             courses,
@@ -198,7 +197,6 @@ router.post('/tas/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         const filepath = files.filename.filepath;
-        var csvData = [];
         fs.createReadStream(filepath)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function(csvrow) {
@@ -235,7 +233,6 @@ router.post('/courses/import', async(req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files) {
         const filepath = files.filename.filepath;
-        var csvData = [];
         fs.createReadStream(filepath)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function(csvrow) {

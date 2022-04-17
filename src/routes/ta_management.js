@@ -56,7 +56,6 @@ router.get(
           error: "No course matched the search term. (Note: The query is case and space sensitive, please respect the format in the example.)"
         });
       } else{
-        //sessionStorage.setItem("currentCourse", courses[0].course_name);
         res.render("pages/ta_management/ta_management_course_result.ejs", {
           userTypes: req.session.user.userTypes,
           username: req.session.user.username,
@@ -126,7 +125,6 @@ router.get(
     const queryObject = url.parse(req.url, true).query;
     const courseName = queryObject["courseKey"];
     const someCourse = await findCourse(courseName);
-    console.log(someCourse[0]);
     const TAmatch = await findTA(someCourse[0].course_name);
     if (TAmatch.length === 0){
       res.render("pages/ta_management/ta_management_course_result.ejs", {
@@ -214,7 +212,6 @@ router.post(
         });
         return;
       } else{
-          console.log(req.body);
           res.render("pages/ta_management/ta_management_course_result.ejs", {
             successMsg: `Your wish list has been set successfully.`,
             errors: [],
@@ -226,24 +223,5 @@ router.post(
     }
   })
 );
-
-//POST REQUEST for TA wish list
-router.post(
-  "/ta-management/add-wish-list",
-  checkAuthenticationWithUserType(["ta","prof"], async (req,res) => {
-    //var courseName = sessionStorage.getItem("currentCourse");
-    res.render("pages/ta_management/ta_management_course_result.ejs", {
-      userTypes: req.session.user.userTypes,
-      username: req.session.user.username,
-      course: "hi",
-    });
-  })
-);
-
-// EXAMPLE OF A POST
-router.post("/test", async (req, res) => {
-  console.log(req.body);
-  res.status(404).json("Not implemented");
-});
 
 module.exports = router;
