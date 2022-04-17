@@ -1,5 +1,6 @@
 <html>
     <%- include('../../partials/dashboard/sysop_dashboard.ejs') %>
+	<% var errors; %>
 	<body>
         <div class="main-body-container">
             <h3 class="text-center">Add a course</h3>
@@ -8,46 +9,60 @@
 				class="container single-page-form-container border border-primary rounded"
 				action="/sysop-tasks/add-course"
 				method="POST"
-			>
+			>	
 				<div class="form-group">
-					<label for="inputCourseName3">Course name</label>
+					<label for="inputCourseTerm3">Course term</label>
 					<input
 						class="form-control"
-						id="inputCourseName3"
-						placeholder="E.g.: COMP"
-						name="courseName"
+						id="inputCourseTerm3"
+						placeholder="E.g.: Fall 2022"
+						name="term_month_year"
 					/>
 				</div>
 				<div class="form-group">
 					<label for="inputCourseNum3">Course number</label>
 					<input
-						type="password"
 						class="form-control"
 						id="inputCourseNum3"
-						placeholder="E.g.: 307"
-						name="courseNum"
+						placeholder="E.g.: COMP 307"
+						name="course_num"
 					/>
 				</div>
-                <div class="form-group">
-					<label for="inputCourseTerm3">Course term</label>
+				<div class="form-group">
+					<label for="inputCourseName3">Course name</label>
 					<input
-						type="password"
 						class="form-control"
-						id="inputCourseTerm3"
-						placeholder="E.g.: Fall 2022"
-						name="courseTerm"
+						id="inputCourseName3"
+						placeholder="E.g.: Web Development"
+						name="course_name"
 					/>
 				</div>
                 <div class="form-group">
 					<label for="inputInstructor3">Instructor full name</label>
 					<input
-						type="password"
 						class="form-control"
 						id="inputInstructor3"
 						placeholder="E.g.: Joseph Vibyhal"
-						name="instructor"
+						name="instructor_assigned_name"
 					/>
 				</div>
+				<% if(errors && errors[0]) { %>
+                    <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                    >
+                        <strong>Invalid: </strong><%= errors[0] %>. Please
+                        try again.
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <% } %>
 				<div class="form-group row">
 					<div class="col-sm-10">
 						<button type="submit" class="btn btn-primary">

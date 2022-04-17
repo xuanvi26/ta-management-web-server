@@ -4,3 +4,4 @@
 {"TAfirstName":"Bob","TAlastName":"Lee","someCourseName":"COMP 202","someCourseTY":"Winter 2022","starRating":"3","someComment":"asd"}
 {"TAfirstName":"Bob","TAlastName":"Lee","someCourseName":"COMP 202","someCourseTY":"Winter 2022","starRating":"2","someComment":"Yay"}
 {"TAfirstName":"Bob","TAlastName":"Lee","courseName":"COMP 307","courseTY":"Fall 2022","starRating":"2","someComment":"bad."}
+{"TAfirstName":"Bob","TAlastName":"bob","courseName":"COMP 322","CourseTY":"Winter 2022","starRating":"3","comment":"Bob"}
