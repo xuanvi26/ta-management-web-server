@@ -117,12 +117,14 @@ router.post(
       if (req.body.username === req.session.user.username) {
         delete req.session.user;
         req.session.authenticated = false;
+        res.status(404).render("pages/landing/home");
+      } else {
+        res.render("pages/sysop_tasks/sysop_landing.ejs", {
+          successMsg: `Deleted user ${req.body.username}`,
+          userTypes: req.session.user.userTypes,
+          username: req.session.user.username,
+        });
       }
-      res.render("pages/sysop_tasks/sysop_landing.ejs", {
-        successMsg: `Deleted user ${req.body.username}`,
-        userTypes: req.session.user.userTypes,
-        username: req.session.user.username,
-      });
     } else {
       res.render("pages/sysop_tasks/sysop_landing.ejs", {
         errorMsg: "Internal error: failed to delete user.",
