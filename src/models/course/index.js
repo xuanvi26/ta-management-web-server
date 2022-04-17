@@ -1,12 +1,11 @@
+// This file includes all read / write functions to course related databases
+
 const _ = require("lodash");
-const { hashPassword } = require.main.require("./src/utils/password");
 const writer = require.main.require("./src/utils/writer");
 const reader = require.main.require("./src/utils/reader");
-const schema = require.main.require("./src/models/course/schema");
 const logger = require.main.require("./src/utils/logger");
-const fs = require("fs");
 
-const TA_TABLE = "./src/models/ta/db3.json"; //IF CHANGE THIS TABLE, go back to services/course.js and make sure key matches
+const TA_TABLE = "./src/models/ta/db3.json";
 const CP_TABLE = "./src/models/course/courses_and_profs.json";
 
 //iterates through course table and finds a course that matches the search term
