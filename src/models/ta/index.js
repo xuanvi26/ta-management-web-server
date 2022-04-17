@@ -10,11 +10,13 @@ const PERFORMANCE_TABLE = './src/models/course/performance_log.json';
 const WISHLIST_TABLE = './src/models/ta/wish_list.json';
 const TACOURSE_TABLE = './src/models/ta/db3.json';
 
+// to add tas to the db
 async function addTa(ta, options = { table: TA_TABLE }) {
     (ta = JSON.stringify(ta)), await writer.writeLineToFile(ta, TA_TABLE);
     return true;
 }
 
+// to get tas from the db
 async function getAllTas() {
     const tas = reader.fileAsyncIterator(TA_TABLE);
     const matchedTas = [];
@@ -26,6 +28,7 @@ async function getAllTas() {
     }
     return matchedTas;
 }
+// get all the entities
 async function getAllRegisteredEntities() {
     const registered = reader.fileAsyncIterator(TACOURSE_TABLE);
     const matchedTas = [];
@@ -37,7 +40,7 @@ async function getAllRegisteredEntities() {
     }
     return matchedTas;
 }
-
+// add a ta to a course
 async function addTaToCourse(ta, course, courseNumber) {
     const entity = {
         TA_name: ta,
@@ -50,6 +53,8 @@ async function addTaToCourse(ta, course, courseNumber) {
     }
     return 0;
 }
+
+// display all the courses
 async function getAllCourses() {
     const tas = reader.fileAsyncIterator(COURSE_TABLE);
     const matchedTas = [];
@@ -62,6 +67,8 @@ async function getAllCourses() {
     return matchedTas;
 }
 
+
+// display the performance
 async function getPerformance(ta) {
     const performances = reader.fileAsyncIterator(PERFORMANCE_TABLE);
     const matchedP = [];
@@ -75,6 +82,8 @@ async function getPerformance(ta) {
     }
     return matchedP;
 }
+
+// display the wishlist
 async function getWishList(ta) {
     const wishLists = reader.fileAsyncIterator(WISHLIST_TABLE);
     const matchedW = [];
@@ -89,6 +98,7 @@ async function getWishList(ta) {
     return matchedW;
 }
 
+// obtain the students comment
 async function getStudentComments(ta) {
     const ratings = reader.fileAsyncIterator(TA_RATING_TABLE);
     const matchedRatings = [];
@@ -103,6 +113,7 @@ async function getStudentComments(ta) {
     return matchedRatings;
 }
 
+// display and compute the average
 async function getTaRatingAverage(ta) {
     const ratings = reader.fileAsyncIterator(TA_RATING_TABLE);
     const matchedRatings = [];
@@ -124,12 +135,14 @@ async function getTaRatingAverage(ta) {
     }
     return allRatings / matchedRatings.length;
 }
+
+// add a class
 async function addCourse(course, options = { table: COURSE_TABLE }) {
     (course = JSON.stringify(course)),
     await writer.writeLineToFile(course, COURSE_TABLE);
     return true;
 }
-
+// remove a ta from course
 async function removeTaFromCourse(TA_name, course_name) {
     const entities = reader.fileAsyncIterator(TACOURSE_TABLE);
     for await (const entity of entities) {
@@ -154,6 +167,7 @@ async function removeTaFromCourse(TA_name, course_name) {
     return true;
 }
 
+// obtain the course with the name
 async function getCourseWithName(searchTerms) {
     const courses = reader.fileAsyncIterator(COURSE_TABLE);
     const matchedCourses = [];
@@ -174,6 +188,7 @@ async function getCourseWithName(searchTerms) {
     return matchedCourses;
 }
 
+// write a rating
 async function writeTARating(TAjson, option = { table: TA_RATING_TABLE }) {
     let error;
     try {
