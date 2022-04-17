@@ -15,6 +15,7 @@ const { response_type } = require.main.require("./src/response");
 const schema = require.main.require("./src/models/account/schema");
 const model = require.main.require("./src/models/account");
 
+// GET register page
 router.get("/register", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/home", {
@@ -26,6 +27,7 @@ router.get("/register", (req, res) => {
   }
 });
 
+// GET all users given some query param
 router.get(
   "/users",
   checkAuthenticationWithUserType(["sysop"], async (req, res) => {
@@ -55,6 +57,7 @@ router.get(
   })
 );
 
+// POST / create a new account
 router.post("/register", async (req, res) => {
   if (!req.session.authenticated) {
     await handleUnauthenticatedUserRegistration(req, res);
@@ -63,6 +66,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// GET landing home page
 router.get(
   "/",
   checkAuthenticationWithUserType(["sysop"], async (req, res) => {
@@ -83,6 +87,7 @@ router.get(
   })
 );
 
+// POST / edit a user 
 router.post(
   "/edit",
   checkAuthenticationWithUserType(["sysop"], async (req, res) => {
@@ -106,6 +111,7 @@ router.post(
   })
 );
 
+// POST / delete a user
 router.post(
   "/remove",
   checkAuthenticationWithUserType(["sysop"], async (req, res) => {

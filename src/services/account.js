@@ -1,3 +1,5 @@
+// This file contains business logic for account related routes
+
 const model = require.main.require("./src/models/account");
 const schema = require.main.require("./src/models/account/schema");
 

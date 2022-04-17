@@ -1,3 +1,5 @@
+// Files contains functions related to hashing passwords (bcrypt)
+
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 

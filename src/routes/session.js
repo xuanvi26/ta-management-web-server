@@ -14,6 +14,7 @@ const schema = Joi.object({
   password: Joi.string().required(),
 }).required();
 
+// GET landing page
 router.get("/", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/home", {
@@ -25,6 +26,7 @@ router.get("/", (req, res) => {
   }
 });
 
+// GET login page
 router.get("/login", (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/home", {
@@ -36,6 +38,7 @@ router.get("/login", (req, res) => {
   }
 });
 
+// POST / login to the website
 router.post("/login", async (req, res) => {
   if (req.session.authenticated) {
     res.render("pages/landing/home", {
@@ -53,7 +56,9 @@ router.post("/login", async (req, res) => {
     return;
   }
 
+  // extract username and password from validated user
   const { username, password } = value;
+  // check matching username and password
   let authenticatedUser = await checkLoginCredentials(username, password);
   if (authenticatedUser) {
     req.session.authenticated = true;
@@ -73,6 +78,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// POST / logout
 router.post(
   "/logout",
   checkAuthentication((req, res) => {
