@@ -38,7 +38,7 @@ async function getAllRegisteredEntities() {
     return matchedTas;
 }
 
-async function addTaToCourse(ta, course) {
+async function addTaToCourse(ta, course, courseNumber) {
     const entity = {
         TA_name: ta,
         courseName: course,

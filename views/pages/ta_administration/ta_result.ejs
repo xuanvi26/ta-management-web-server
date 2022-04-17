@@ -125,6 +125,28 @@
                     </tbody>
                     <% }%>
             </table>
+
+            <h4 style="width: 100%; text-align: center">TA Courses Assignments</h4>
+            <table class="table container" style="margin-top: 2vw">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Course</th>
+                        <th scope="col">TA</th>
+                    </tr>
+                </thead>
+                <% for(let entity of registered) { %>
+                    <tbody class="container">
+                        <tr>
+                            <td style="vertical-align: middle">
+                                <%= entity.courseName %>
+                            </td>
+                            <td style="vertical-align: middle">
+                                <%= entity.TA_name %>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }%>
+            </table>
         </div>
     </body>
 
