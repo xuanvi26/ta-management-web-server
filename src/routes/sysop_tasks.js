@@ -3,7 +3,6 @@ const router = express.Router();
 const { checkAuthenticationWithUserType } = require.main.require(
   "./src/utils/authentication"
 );
-const { response_type } = require.main.require("./src/response");
 var { parse } = require('csv-parse');
 var formidable = require('formidable');
 const fs = require('fs');
@@ -11,6 +10,7 @@ const { writeToTable } = require.main.require("./src/models/course");
 const CP_TABLE = "./src/models/course/courses_and_profs.json";
 const { isCPInputValid } = require.main.require("./src/services/course");
 
+// GET home page 
 router.get(
   "/",
   checkAuthenticationWithUserType(["sysop"], (req, res) => {
@@ -21,6 +21,7 @@ router.get(
   })
 );
 
+// GET add user page
 router.get(
   "/add-user",
   checkAuthenticationWithUserType(["sysop"], (req, res) => {
@@ -31,6 +32,7 @@ router.get(
   })
 );
 
+// GET search user page
 router.get(
   "/search-users",
   checkAuthenticationWithUserType(["sysop"], (req, res) => {
@@ -41,6 +43,7 @@ router.get(
   })
 );
 
+// GET add user course page
 router.get(
   "/add-course",
   checkAuthenticationWithUserType(["sysop"], (req, res) => {

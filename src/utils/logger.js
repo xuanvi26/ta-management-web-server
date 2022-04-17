@@ -1,5 +1,6 @@
 const { createLogger, format, transports } = require("winston");
 
+// Creates a logger with structured output
 const logger = createLogger({
   format: format.combine(
     format.colorize(),

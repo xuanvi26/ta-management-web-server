@@ -1,3 +1,5 @@
+// This file includes all read / write logic for accounts database
+
 const _ = require("lodash");
 const { hashPassword } = require.main.require("./src/utils/password");
 const writer = require.main.require("./src/utils/writer");
@@ -9,6 +11,7 @@ const fs = require("fs");
 const ACCOUNT_TABLE = "./src/models/account/db.json";
 const ACCOUNT_TABLE_TMP = "./src/models/account/db.json.tmp";
 
+// Writes a user into the database
 async function writeUser(
   user,
   options = { table: ACCOUNT_TABLE, hashPassword: true }
@@ -32,6 +35,7 @@ async function writeUser(
   return { error };
 }
 
+// Deletes user from the database
 async function deleteUser(username) {
   const users = reader.fileAsyncIterator(ACCOUNT_TABLE);
   for await (const rawUser of users) {
@@ -54,6 +58,7 @@ async function deleteUser(username) {
   }
 }
 
+// Gets first user matching all given keys (could by any key)
 //e.g., {firstName: "jerry", lastName: "gao"} -> find user with firsName AND lastName
 // does not work for values of arrays or objects
 async function getUserWithKeys(searchTerms) {
@@ -75,6 +80,7 @@ async function getUserWithKeys(searchTerms) {
   return false;
 }
 
+// Gets first user matching one or more given keys (could by any key)
 //e.g., {firstName: "jerry", lastName: "gao"} -> find users with firsName OR lastName
 // does not work for values of arrays or objects
 async function getUserWithAnyKeys(searchTerms) {
@@ -96,6 +102,8 @@ async function getUserWithAnyKeys(searchTerms) {
   return false;
 }
 
+// Edits a user in the database (param includes a full user, i.e., 
+// the function overrides the user in question)
 async function editUser(inputUser) {
   const users = reader.fileAsyncIterator(ACCOUNT_TABLE);
   for await (const rawUser of users) {
@@ -130,6 +138,8 @@ async function editUser(inputUser) {
   }
   return {};
 }
+
+// Get ALL users with any of the given keys
 //e.g., {firstName: "jerry", lastName: "gao"} -> find users with firsName OR lastName
 // does not work for values of arrays or objects
 async function getUsersWithAnyKeys(searchTerms) {
